@@ -15,9 +15,26 @@ module.exports = (db) => {
         }
       });
     };
+
+
+    // let getEntriesByJournal = (request, response) => {
+  
+    //     db.entry.getEntriesByJournal((error, entries) => {
+    //       // queryResult contains pokemon data returned from the pokemon model
+    //       if (error) {
+    //         console.error('error getting journals', error);
+    //         response.status(500);
+    //         response.send('server error');
+    //       } else {
+    //         response.send({entries: entries});
+    //         console.log(entries)
+    //       }
+    //     });
+    //   };
   
     return {
-      getAll
+    getAll,
+    // getEntriesByJournal
 
     }
   

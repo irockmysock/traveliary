@@ -11,17 +11,47 @@ class Entry extends React.Component {
 //   }
 
   render() {
-    return (
-      <div>
-          ENTRIESSS
-        {/* <h1>{this.props.displayedProduct.name}</h1>
-        <h2>{this.props.displayedProduct.price}</h2>
-        <p>{this.props.displayedProduct.description}</p>
-        <button onClick={(event)=>{this.addToCart(event)}}>
-          add to cart
-        </button>   */}
-      </div>
-    );
+      if (this.props.tripEntries.length === 0) {
+        let listResults = this.props.entries.map( (result, id) => {
+            return (
+            <li key={id} className="list-group-item">
+                <p>{result.title}</p> 
+                <p>{result.entry_content}</p>
+            </li>
+            )
+        });
+
+        return (
+            <div className="searchResults">
+              <h1>Journal entries</h1>
+              <ul>
+                {listResults}   
+              </ul>
+            </div>
+          
+        );
+
+    } else {
+        let listResults = this.props.tripEntries.map( (result, id) => {
+            return (
+            <li key={id} className="list-group-item">
+                <p>{result.title}</p> 
+                <p>{result.entry_content}</p>
+            </li>
+            )
+        });
+
+        return (
+            <div className="searchResults">
+              <h1>Journal entries</h1>
+              <ul>
+                {listResults}   
+              </ul>
+            </div>
+          
+        );
+    }
+      
   }
 }
 

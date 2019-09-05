@@ -6,6 +6,7 @@ module.exports = (app, db) => {
 
   const entries = require('./controllers/entry')(db);
   app.get('/entries', entries.getAll);
+  // app.get('/entries', entries.getEntriesBy);
 
 };
 

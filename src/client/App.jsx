@@ -11,55 +11,83 @@ class App extends React.Component {
     super();
     this.state = {
       message: 'hello',
-      currentJournal: null
+      currentJournal: null,
+      entries: [],
+      tripEntries: [],
       // journals: [],
     };
-    // this.getAllJournals = this.getAllJournals.bind(this);
+    // this.listTripEntries = this.listTripEntries.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
   }
 
-  // getAllJournals() {
-  //   console.log("getting JOURNALSS!!!")
-  //   var reactThis = this;
-  
-  //   var reqListener = function(){
-  //     console.log(this.responseText);
-      
-  //     //transform the response to real js objects
-  //     const data = JSON.parse( this.responseText );
-  //     console.log(data)
-      
-  //     // here, we can't do this.setState
-      
-  //     //refer to react state instead
-  //     reactThis.setState({journals: data.journals}, () => {
-  //       console.log(this.state)
-  //     });
-  //   }
 
-  //   var oReq = new XMLHttpRequest();
-  //   oReq.addEventListener("load", reqListener);
-  //   oReq.open("GET", "http://127.0.0.1:3000/journals");
-  //   oReq.send();
-  // }
+  componentDidMount() {
+    fetch("http://127.0.0.1:3000/entries")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            entries: result.entries
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+          console.log("ERRORRRRRRRR")
+        }
+      )
+      .then(()=>{
+        console.log("entries array isss");
+        console.log(this.state.entries);
+      })
+  }
+
+  clickHandler(event) {
+    console.log(this.state.entries)
+
+    let journalId = parseInt(event.target.id);
+    console.log(typeof(journalId))
+    
+    let allEntries = this.state.entries;
+    let tripEntries = [];
+    allEntries.map(entry => {
+      if (entry.journal_id == journalId) {
+        console.log(typeof(entry.journal_id))
+        
+        tripEntries.push(entry);
+        this.setState({tripEntries: tripEntries});
+        console.log("~~~~~~~~~~~~~~~~~~")
+        console.log(this.state.entries);
+      } else {
+        console.log("NO MATCHHHHH")
+      }
+    })
+  }
 
 
   render() {
     return (
       
-      // <div className="container text-center">
+      <div className="container text-center">
        
         <div className="row">
            
           <div className="col-4">
-            <Journal />
+            <Journal listTripEntries={this.clickHandler}/>
             {/* <Form /> */}
           </div>
           <div className="col-8">
-            <Entry />
+            <Entry tripEntries={this.state.tripEntries} entries={this.state.entries}/>
             {/* <Counter message={this.state.message} /> */}
           </div>
         </div>
-      // </div>
+      </div>
     );
   }
 }

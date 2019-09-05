@@ -67,6 +67,7 @@ class Journal extends React.Component {
     )
   }
 
+
   submit(){
     console.log("WIOW SUBMIT", this.state);
 
@@ -124,6 +125,9 @@ class Journal extends React.Component {
                 <li key={journal.id}>
                     {journal.journal_name} 
                 {/* <img src={journal.cover_img}/> */}
+                <button id={journal.id} onClick={this.props.listTripEntries}>
+                  show journal entries
+                </button> 
                 </li>
                 ))}
             </ul>
