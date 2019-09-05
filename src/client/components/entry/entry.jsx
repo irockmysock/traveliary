@@ -1,4 +1,6 @@
 import React from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 import PropTypes from 'prop-types';
 
@@ -15,6 +17,9 @@ class Entry extends React.Component {
         let listResults = this.props.entries.map( (result, id) => {
             return (
             <li key={id} className="list-group-item">
+                <Moment format="DD/MM">
+                    {result.entry_date}
+                </Moment>
                 <p>{result.title}</p> 
                 <p>{result.entry_content}</p>
             </li>
@@ -33,8 +38,12 @@ class Entry extends React.Component {
 
     } else {
         let listResults = this.props.tripEntries.map( (result, id) => {
+        
             return (
             <li key={id} className="list-group-item">
+                <Moment format="DD/MM">
+                    {result.entry_date}
+                </Moment>
                 <p>{result.title}</p> 
                 <p>{result.entry_content}</p>
             </li>

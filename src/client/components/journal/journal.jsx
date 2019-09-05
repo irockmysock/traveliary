@@ -108,6 +108,7 @@ class Journal extends React.Component {
         return (
             <React.Fragment>
             <div>
+                <h2>My Diaries</h2>
                 <div>
                     name:
                     <input onChange={(event)=>{this.nameChangeHandler(event)}}/>
@@ -122,6 +123,7 @@ class Journal extends React.Component {
 
             <ul>
                 {journals.map(journal => (
+
                 <li key={journal.id}>
                     {journal.journal_name} 
                 {/* <img src={journal.cover_img}/> */}

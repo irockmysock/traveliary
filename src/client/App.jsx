@@ -1,8 +1,12 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 import Journal from './components/journal/journal';
 import Entry from './components/entry/entry';
+import List from './components/list/list';
+
 // import Counter from './components/counter/counter';
 // import Form from './components/form/form';
 
@@ -11,13 +15,15 @@ class App extends React.Component {
     super();
     this.state = {
       message: 'hello',
-      currentJournal: null,
+      currentJournal: 0,
       entries: [],
       tripEntries: [],
       // journals: [],
     };
     // this.listTripEntries = this.listTripEntries.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
+    this.updateCurrentJournal = this.updateCurrentJournal.bind(this);
+    
   }
 
 
@@ -42,14 +48,14 @@ class App extends React.Component {
           console.log("ERRORRRRRRRR")
         }
       )
-      .then(()=>{
-        console.log("entries array isss");
-        console.log(this.state.entries);
-      })
+      // .then(()=>{
+      //   console.log("entries array isss");
+      //   console.log(this.state.entries);
+      // })
   }
 
   clickHandler(event) {
-    console.log(this.state.entries)
+    // console.log(this.state.entries)
 
     let journalId = parseInt(event.target.id);
     console.log(typeof(journalId))
@@ -58,18 +64,22 @@ class App extends React.Component {
     let tripEntries = [];
     allEntries.map(entry => {
       if (entry.journal_id == journalId) {
-        console.log(typeof(entry.journal_id))
         
         tripEntries.push(entry);
-        this.setState({tripEntries: tripEntries});
-        console.log("~~~~~~~~~~~~~~~~~~")
-        console.log(this.state.entries);
+        this.setState(
+          {tripEntries: tripEntries},
+          this.updateCurrentJournal
+        )
+        
       } else {
         console.log("NO MATCHHHHH")
       }
-    })
+    });
   }
 
+  updateCurrentJournal() {
+    this.setState({currentJournal: this.state.tripEntries[0].journal_id})
+  }
 
   render() {
     return (
@@ -78,11 +88,13 @@ class App extends React.Component {
        
         <div className="row">
            
-          <div className="col-4">
+          <div className="col-6">
             <Journal listTripEntries={this.clickHandler}/>
+            <List tripEntries={this.state.tripEntries}/>
             {/* <Form /> */}
           </div>
-          <div className="col-8">
+          <div className="col-6">
+            Journal entries
             <Entry tripEntries={this.state.tripEntries} entries={this.state.entries}/>
             {/* <Counter message={this.state.message} /> */}
           </div>
