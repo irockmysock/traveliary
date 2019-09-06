@@ -43,13 +43,11 @@ class Journal extends React.Component {
   nameChangeHandler(event){
     console.log("$$$$$$ "+event.target.value);
     this.setState({journalName: event.target.value});
-
   }
 
   coverImgChangeHandler(event){
     console.log("******** "+event.target.value);
     this.setState({coverImg: event.target.value});
-
   }
 
 //   userChangeHandler(event){

@@ -16,6 +16,16 @@ module.exports = (db) => {
       });
     };
 
+    let addNewEntry = (request, response) => {
+        console.log(request.body); 
+        db.entry.addNewEntry(request.body,(error, result) => {
+          // TODO add conditionals that check for errors
+          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+          console.log(result)
+          response.send(result[0]);
+        });
+    };
+
 
     // let getEntriesByJournal = (request, response) => {
   
@@ -34,6 +44,7 @@ module.exports = (db) => {
   
     return {
     getAll,
+    addNewEntry,
     // getEntriesByJournal
 
     }
