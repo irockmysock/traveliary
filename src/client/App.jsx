@@ -1,5 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
+var moment = require('moment');
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker-cssmodules.css";
 // import Moment from 'react-moment';
@@ -23,6 +24,7 @@ class App extends React.Component {
       currentJournal: 0,
       entries: [],
       tripEntries: [],
+      dayEntries: [],
       inAddNewEntryMode: false,
       entryTitle: null,
       media: null,
@@ -45,12 +47,20 @@ class App extends React.Component {
     this.entryContentChangeHandler = this.entryContentChangeHandler.bind(this);
     this.entryLocationChangeHandler = this.entryLocationChangeHandler.bind(this);
     this.entryDateChangeHandler = this.entryDateChangeHandler.bind(this);
+    this.getDate = this.getDate.bind(this);
+
 
 
     
 
   }
+  getDate() {
 
+    // let now = moment().format("YYYY-MM-DD");
+    alert (typeof(this.state.entryDate));
+    // var date = new Date();
+    // alert (`${date.getFullYear()}` + "-" + `${date.getMonth()}` + "-" + `${date.getDate()}`);
+  }
 
   componentDidMount() {
     fetch("http://127.0.0.1:3000/entries")
@@ -92,13 +102,15 @@ class App extends React.Component {
         tripEntries.push(entry);
         this.setState(
           {tripEntries: tripEntries,
-          currentJournal: journalId}
+          currentJournal: journalId,
+          inAddNewEntryMode: false}
         )
         
       } else {
         this.setState(
           {tripEntries: tripEntries,
-          currentJournal: journalId}
+          currentJournal: journalId,
+          inAddNewEntryMode: false}
         )
         console.log("NO MATCHHHHH")
       }
@@ -109,17 +121,39 @@ class App extends React.Component {
   showDateEntries(event) {
     // console.log(this.state.entries)
 
-    let date = event.target.date;
-    console.log(typeof(date))
+    let date = event.target.id;
+    let formattedDate = moment(date).format("YYYY-MM-DD")
+    console.log("FORMATEDDD DATE OF EVENT TARGET " + typeof(formattedDate))
+    console.log(formattedDate)
     
     let tripEntries = this.state.tripEntries;
+    console.log("TRIP ENTRIESS IS");
+    console.log(tripEntries);
+
     let dayEntries = [];
+    
     tripEntries.map(entry => {
-      if (entry.entry_date == date) {
+      // console.log("ENTRY DATEEES FORMATT")
+      // console.log(typeof(entry.entry_date))
+      // console.log(moment(entry.entry_date).format("YYYY-MM-DD"))
+
+      let entryDate = moment(entry.entry_date).format("YYYY-MM-DD");
+      console.log("ENTRY DATEE ISSSSS")
+      console.log(entryDate);
+
+      if ( entryDate == formattedDate) {
+        console.log(entry)
         dayEntries.push(entry);
+        console.log("DAY ENTRIESSS ARRAY");
+        console.log(dayEntries);
         this.setState(
-          {tripEntries: dayEntries}
+          {dayEntries: dayEntries}, () => {
+            console.log(this.state.dayEntries)
+          }
         )
+        console.log("MATTTCCH!!!");
+        // console.log("NEW TRIP ENTRIES ISSS");
+        // console.log(this.state.tripEntries)
         
       } else {
         console.log("NO MATCHHHHH")
@@ -142,11 +176,46 @@ class App extends React.Component {
   addNewEntry(entry) {
     console.log("ENTRYRYRYRYRRYRYRYRRYRYRRY");
     console.log( entry );
+    let updatedEntries = [entry, ...this.state.entries];
+    let journalId = this.state.currentJournal;
+    
+    let tripEntries = [];
     this.setState(
-        {entries:[entry, ...this.state.entries], 
-        requested: false,
-        inAddNewEntryMode: false}
+      {entries: updatedEntries,
+      requested: false,
+      inAddNewEntryMode: false}, () => {
+        console.log("ENTRIES UPDATED")
+      }
     )
+    let allEntries = this.state.entries;
+
+    allEntries.map(entry => {
+      console.log("MAPPPINNGGGG")
+      if (entry.journal_id == journalId) {
+        tripEntries.push(entry);
+        this.setState(
+          {tripEntries: tripEntries,
+          currentJournal: journalId,
+          inAddNewEntryMode: false}
+        )
+        
+      } else {
+        this.setState(
+          {tripEntries: tripEntries,
+          currentJournal: journalId,
+          inAddNewEntryMode: false}
+        )
+        console.log("NO MATCHHHHH")
+      }
+    });
+
+    // this.setState(
+    //     {entries: updatedEntries,
+    //     requested: false,
+    //     inAddNewEntryMode: false}, () => {
+    //       console.log("ENTRIES UPDATED")
+    //     }
+    // )
   }
 
 
@@ -173,8 +242,12 @@ class App extends React.Component {
   }
 
   entryDateChangeHandler(date){
+      // let formattedDate = moment(date).format("DD-MM-YYYY")
+      // this.setState({entryDate: formattedDate});
+      // console.log("DATEEEEEE" + formattedDate)
+      // console.log("TYPE ISS " + typeof(formattedDate))
       this.setState({entryDate: date});
-      console.log("DATEEEEEE" + date)
+      console.log("DATTEEEEE "+ date);
   }
 
 
@@ -216,11 +289,12 @@ class App extends React.Component {
   render() {
     return (
       
-      <div className="container text-center">
+      <div className=" text-center">
        
         <div className="row">
            
           <div className="col-6">
+            <button onClick={this.getDate}>GET DATEE</button>
             <Journal listTripEntries={this.clickHandler}/>
             <List 
               currentJournal={this.state.currentJournal}
@@ -240,7 +314,10 @@ class App extends React.Component {
           </div>
           <div className="col-6">
             Journal entries
-            <Entry tripEntries={this.state.tripEntries} entries={this.state.entries}/>
+            <Entry 
+                dayEntries={this.state.dayEntries}
+                tripEntries={this.state.tripEntries} 
+                entries={this.state.entries}/>
             {/* <Counter message={this.state.message} /> */}
           </div>
         </div>

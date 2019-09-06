@@ -17,7 +17,7 @@ class List extends React.Component {
         this.state = {
           error: null,
           isLoaded: false,
-          requested : false,
+          requested : false
         //   startDate: new Date(),
         //   entryTitle: null,
         //   media: null,
@@ -31,37 +31,12 @@ class List extends React.Component {
     
     }
 
-    // handleChange(date) {
-    //     this.setState({
-    //       startDate: date
-    //     });
-    //   };
-    
-    // entryTitleChangeHandler(event){
-    //     console.log("$$$$$$ "+event.target.value);
-    //     this.setState({entryTitle: event.target.value});
-    // }
-
-    // mediaChangeHandler(event){
-    //     console.log("$$$$$$ "+event.target.value);
-    //     this.setState({media: event.target.value});
-    // }
-
-    // entryContentChangeHandler(event){
-    //     console.log("$$$$$$ "+event.target.value);
-    //     this.setState({entryContent: event.target.value});
-    // }
-
-    // entryLocationChangeHandler(event){
-    //     console.log("$$$$$$ "+event.target.value);
-    //     this.setState({entryLocation: event.target.value});
-    // }
-
-    // entryDateChangeHandler(event){
-    //     console.log("$$$$$$ "+event.target.value);
-    //     this.setState({entryDate: event.target.value});
-    // }
-
+    // componentDidUpdate(prevProps) {
+    //     // Typical usage (don't forget to compare props):
+    //     if (this.props.tripEntries !== prevProps.tripEntries) {
+    //       this.fetchData(this.props.tripEntries);
+    //     }
+    //   }
 
 
     
@@ -94,7 +69,8 @@ class List extends React.Component {
                 })
                 return (
                     <React.Fragment key={index}>
-                        <h2 date={key} onClick={this.props.showDateEntries}><Moment format="DD">{key}</Moment>th</h2>
+                        <button id={key} onClick={this.props.showDateEntries}>SHOW</button>
+                        <h2><Moment format="DD">{key}</Moment>th</h2>
                         <ul>
                             {entries}
                         </ul>

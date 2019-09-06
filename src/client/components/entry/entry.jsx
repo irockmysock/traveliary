@@ -36,8 +36,31 @@ class Entry extends React.Component {
           
         );
 
-    } else {
+    } else if (this.props.dayEntries.length === 0) {
         let listResults = this.props.tripEntries.map( (result, id) => {
+        
+            return (
+            <li key={id} className="list-group-item">
+                <Moment format="DD/MM">
+                    {result.entry_date}
+                </Moment>
+                <p>{result.title}</p> 
+                <p>{result.entry_content}</p>
+            </li>
+            )
+        });
+
+        return (
+            <div className="searchResults">
+              <h1>Journal entries</h1>
+              <ul>
+                {listResults}   
+              </ul>
+            </div>
+          
+        );
+    } else {
+        let listResults = this.props.dayEntries.map( (result, id) => {
         
             return (
             <li key={id} className="list-group-item">
