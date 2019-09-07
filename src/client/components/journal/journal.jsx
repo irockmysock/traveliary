@@ -9,6 +9,8 @@ class Journal extends React.Component {
       error: null,
       isLoaded: false,
       requested : false,
+      inEditMode: false,
+      inAddMode: false,
       journals: [],
       journalName: null,
       coverImg: null,
@@ -17,6 +19,9 @@ class Journal extends React.Component {
     this.submit = this.submit.bind(this);
     this.deleteJournal = this.deleteJournal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.nameChangeHandler = this.nameChangeHandler.bind(this);
+    this.coverImgChangeHandler = this.coverImgChangeHandler.bind(this);
+
 
 
   }
@@ -61,6 +66,14 @@ class Journal extends React.Component {
       requested: false,}
     );
   };
+
+  handleEdit(journalId) {
+    this.setState(
+      {inEditMode: true
+      }
+    );
+  };
+
 
   deleteJournal(event){
     console.log("WORKKSS" + event.target.id)
@@ -114,6 +127,7 @@ class Journal extends React.Component {
 //     this.setState({user_id: event.target.value});
 
 //   }
+  
 
   addNewJournal(journal) {
     console.log("RERERERERERERERERERERERERERERERERRE");
@@ -164,19 +178,9 @@ class Journal extends React.Component {
     } else if (!this.state.requested) {
         return (
             <React.Fragment>
-            <div>
+           
                 <h2>My Diaries</h2>
-                <div>
-                    name:
-                    <input onChange={(event)=>{this.nameChangeHandler(event)}}/>
-                </div>
-                <div>
-                    cover:
-                    <input onChange={(event)=>{this.coverImgChangeHandler(event)}}/>
-                </div>
-    
-                <button className={"btn btn-primary"} onClick={this.submit}>Add New Diary</button>
-            </div>
+                
 
             <ul>
                 {journals.map(journal => (
@@ -186,11 +190,18 @@ class Journal extends React.Component {
                 {/* <img src={journal.cover_img}/> */}
                 <button id={journal.id} onClick={this.props.listTripEntries}>
                   show journal entries
-                </button> 
+                </button>
+                <button id={journal.id} onClick={this.editJournal}>Edit</button> 
                 <button id={journal.id} onClick={this.deleteJournal}>Delete</button>
                 </li>
                 ))}
             </ul>
+
+            <Form 
+              nameChangeHandler={this.nameChangeHandler}
+              coverImgChangeHandler={this.coverImgChangeHandler}
+              submit={this.submit}
+            />
             </React.Fragment>    
             );
 
@@ -202,6 +213,51 @@ class Journal extends React.Component {
 
   }
 }
-<Journal/>
+
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inEditMode: false,
+      inAddMode: false,
+    }
+    this.activateAddMode = this.activateAddMode.bind(this);
+  };
+
+  activateAddMode() {
+    console.log("ADD MODE");
+    this.setState({inAddMode:true});
+  }
+
+
+  render() {
+    if (this.state.inAddMode === true) {
+      return (
+        <React.Fragment>
+          <div>
+            name:
+            <input onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
+          </div>
+          <div>
+            cover:
+            <input onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+          </div>
+
+          <button className={"btn btn-primary"} onClick={this.props.submit}>Add New Diary</button>
+          
+        </React.Fragment>
+      );
+      } else {
+        return (
+          <React.Fragment>
+            
+            <button className={"btn btn-primary"} onClick={this.activateAddMode}>+++</button>
+            
+          </React.Fragment>
+        );
+      }
+    }
+}
 
 export default Journal;

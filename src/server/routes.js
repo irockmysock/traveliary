@@ -4,6 +4,7 @@ module.exports = (app, db) => {
   app.get('/journals', journals.getAll);
   app.post('/journals/new', journals.addNewJournal);
   app.delete('/journals/delete', journals.deleteJournal);
+  app.put('/journals/edit', journals.editJournal);
 
   const entries = require('./controllers/entry')(db);
   app.get('/entries', entries.getAll);

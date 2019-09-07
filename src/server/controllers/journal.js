@@ -43,7 +43,6 @@ module.exports = (db) => {
   let getAll = (request, response) => {
 
     db.journal.getAllJournals((error, journals) => {
-      // queryResult contains pokemon data returned from the pokemon model
       if (error) {
         console.error('error getting journals', error);
         response.status(500);
@@ -58,7 +57,6 @@ module.exports = (db) => {
   let addNewJournal = (request, response) => {
     console.log(request.body); 
     db.journal.addNewJournal(request.body,(error, result) => {
-      // TODO add conditionals that check for errors
       console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
       console.log(result)
       response.send(result[0]);
@@ -68,19 +66,27 @@ module.exports = (db) => {
   let deleteJournal = (request, response) => {
     console.log(request.body); 
     db.journal.deleteJournal(request.body,(error, result) => {
-      // TODO add conditionals that check for errors
+      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+      console.log(result)
+      response.send(result[0]);
+    });
+  };
+  
+
+  let editJournal = (request, response) => {
+    console.log(request.body); 
+    db.journal.editJournal(request.body,(error, result) => {
       console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
       console.log(result)
       response.send(result[0]);
     });
   };
 
-  
-
   return {
     getAll,
     addNewJournal,
-    deleteJournal
+    deleteJournal,
+    editJournal
 
     // get : get,
     // apiget : apiget

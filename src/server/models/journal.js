@@ -63,6 +63,26 @@ module.exports = (dbPoolInstance) => {
   };
 
 
+  let editJournal = (data,callback) => {
+
+    let journalName = data.journal_name;
+    let coverImg = data.cover_img;
+    let userId = data.user_id;
+    let query = "UPDATE journals SET journal_name=$1, cover_img=$2 WHERE user_id=$3 RETURNING *";
+    const values = [journalName, coverImg, userId];
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+      if (error) {
+        // invoke callback function with results after query has executed
+        callback(error, null);
+      } else {
+        // invoke callback function with results after query has executed
+
+        callback(null, queryResult.rows );
+      }
+    });
+  };
+
   // let create = (pokemon, callback) => {
   //   // set up query
   //   const queryString = `INSERT INTO pokemons (name, num, img, weight, height)
@@ -129,7 +149,8 @@ module.exports = (dbPoolInstance) => {
   return {
     getAllJournals,
     addNewJournal,
-    deleteJournal
+    deleteJournal,
+    editJournal
     // create,
     // get 
   };
