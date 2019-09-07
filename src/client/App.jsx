@@ -102,6 +102,7 @@ class App extends React.Component {
         tripEntries.push(entry);
         this.setState(
           {tripEntries: tripEntries,
+          dayEntries: [],
           currentJournal: journalId,
           inAddNewEntryMode: false}
         )

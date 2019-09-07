@@ -18,30 +18,11 @@ class List extends React.Component {
           error: null,
           isLoaded: false,
           requested : false
-        //   startDate: new Date(),
-        //   entryTitle: null,
-        //   media: null,
-        //   entryContent: null,
-        //   entryLocation: null,
-        //   entryDate: null,
-        //   userId: 1,
-        //   journalId: this.props.currentJournal
+
         };
         // this.handleChange = this.handleChange.bind(this);
     
     }
-
-    // componentDidUpdate(prevProps) {
-    //     // Typical usage (don't forget to compare props):
-    //     if (this.props.tripEntries !== prevProps.tripEntries) {
-    //       this.fetchData(this.props.tripEntries);
-    //     }
-    //   }
-
-
-    
-
-
 
     render() {
         //   return (
@@ -49,9 +30,59 @@ class List extends React.Component {
         //   )
             let cats = {};
             if (this.props.tripEntries.length === 0) {
-                return (
-                    <h1> NO LIST </h1>
-                )
+
+
+                if (!this.props.inAddNewEntryMode) {
+                    return(
+                        <div>
+                            <h2>NOOO LISTTT</h2>
+                            <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>
+                            {headers}
+                        </div>
+                    )
+                } else {
+                    
+                    return(
+                      <React.Fragment>
+                        <div>
+                            title:
+                            <input onChange={(event)=>{this.props.entryTitleChangeHandler(event)}}/>
+                        </div>
+                        <div>
+                            media:
+                            <input onChange={(event)=>{this.props.mediaChangeHandler(event)}}/>
+                        </div>
+                        <div>
+                            content:
+                            <input onChange={(event)=>{this.props.entryContentChangeHandler(event)}}/>
+                        </div>
+                        <div>
+                            location:
+                            <input onChange={(event)=>{this.props.entryLocationChangeHandler(event)}}/>
+                        </div>
+    
+                        {/* <div>
+                            date:
+                            <input onChange={(event)=>{this.props.entryDateChangeHandler(event)}}/>
+                        </div> */}
+                        Dateeeee:
+                        <DatePicker
+                            selected={this.props.entryDate}
+                            onChange={this.props.entryDateChangeHandler}
+                        />
+                        
+    
+                        <button className={"btn btn-primary"} onClick={this.props.submitEntry}>Add NEW ENTRY</button>
+                      </React.Fragment>
+                        
+                    )
+                }
+                // return (
+                //   <React.Fragment>
+                //     <h1> NO LIST </h1>
+                //     <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>
+                //   </React.Fragment>
+                // )
         
             } else {
                 cats = this.props.tripEntries.reduce((catMemo, { entry_date }) => {
@@ -69,8 +100,8 @@ class List extends React.Component {
                 })
                 return (
                     <React.Fragment key={index}>
-                        <button id={key} onClick={this.props.showDateEntries}>SHOW</button>
                         <h2><Moment format="DD">{key}</Moment>th</h2>
+                        <button id={key} onClick={this.props.showDateEntries}>SHOW</button>
                         <ul>
                             {entries}
                         </ul>
@@ -138,18 +169,3 @@ export default List;
 
 
 
-// if (!this.props.inAddNewEntryMode) {
-//     return(
-//         <div>
-//             <h2>New List</h2>
-//             <button onClick={this.props.addNewEntry}>ADD NEW ENTRYYYY</button>
-//             {headers}
-//         </div>
-//     )
-// } else {
-//     return(
-//         <div>
-//             <h1>READY TO ADDD</h1>
-//         </div>
-//     )
-// }
