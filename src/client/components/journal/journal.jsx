@@ -15,6 +15,9 @@ class Journal extends React.Component {
       userId: 1
     };
     this.submit = this.submit.bind(this);
+    this.deleteJournal = this.deleteJournal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+
 
   }
 
@@ -48,6 +51,62 @@ class Journal extends React.Component {
   coverImgChangeHandler(event){
     console.log("******** "+event.target.value);
     this.setState({coverImg: event.target.value});
+  }
+
+
+  handleDelete(journalId) {
+    const journals = this.state.journals.filter(journal => journal.id !== journalId);
+    this.setState(
+      {journals: journals,
+      requested: false,}
+    );
+  };
+
+  deleteJournal(event){
+    console.log("WORKKSS" + event.target.id)
+    console.log(typeof(event.target.id));
+    var data = { 
+      "journal_id": event.target.id
+    };
+    
+
+    fetch("/journals/delete", {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }).then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+    }).then(function(data) {
+        if(data === "success"){
+           alert("JOURNAL DELETEDD");  
+        }
+    }).catch(function(err) {
+        console.log(err)
+    });
+
+    // var request = new XMLHttpRequest();
+
+    // var componentThis = this;
+
+    // request.addEventListener("load", function() {
+    //     console.log("DONE");
+    //     const responseData = JSON.parse( this.responseText );
+    //     console.log(this.responseText)
+    //     console.log( responseData );
+    //     componentThis.handleDelete( responseData.id );
+    //     alert("WOW DELETETETETD");
+    // });
+        
+    // request.open("POST", '/journals/delete');
+    // request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    // request.send(JSON.stringify(data));
+
+    this.setState({requested:true});
+    
+    
   }
 
 //   userChangeHandler(event){
@@ -128,6 +187,7 @@ class Journal extends React.Component {
                 <button id={journal.id} onClick={this.props.listTripEntries}>
                   show journal entries
                 </button> 
+                <button id={journal.id} onClick={this.deleteJournal}>Delete</button>
                 </li>
                 ))}
             </ul>

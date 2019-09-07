@@ -41,11 +41,26 @@ module.exports = (dbPoolInstance) => {
         callback(null, queryResult.rows );
       }
     });
-
-
-
   };
 
+
+  let deleteJournal = (data,callback) => {
+
+    let journalId = data.journal_id;
+    let query = "DELETE FROM journals WHERE id=$1";
+    const values = [journalId];
+
+    dbPoolInstance.query(query, values, (error, queryResult) => {
+      if (error) {
+        // invoke callback function with results after query has executed
+        callback(error, null);
+      } else {
+        // invoke callback function with results after query has executed
+
+        callback(null, queryResult.rows );
+      }
+    });
+  };
 
 
   // let create = (pokemon, callback) => {
@@ -113,7 +128,8 @@ module.exports = (dbPoolInstance) => {
 
   return {
     getAllJournals,
-    addNewJournal
+    addNewJournal,
+    deleteJournal
     // create,
     // get 
   };

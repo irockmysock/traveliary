@@ -42,12 +42,16 @@ class App extends React.Component {
     this.submitEntry = this.submitEntry.bind(this);
     this.showDateEntries = this.showDateEntries.bind(this);
 
-    this.entryTitleChangeHandler = this.entryTitleChangeHandler.bind(this);
-    this.mediaChangeHandler = this.mediaChangeHandler.bind(this);
-    this.entryContentChangeHandler = this.entryContentChangeHandler.bind(this);
-    this.entryLocationChangeHandler = this.entryLocationChangeHandler.bind(this);
+    // this.entryTitleChangeHandler = this.entryTitleChangeHandler.bind(this);
+    // this.mediaChangeHandler = this.mediaChangeHandler.bind(this);
+    // this.entryContentChangeHandler = this.entryContentChangeHandler.bind(this);
+    // this.entryLocationChangeHandler = this.entryLocationChangeHandler.bind(this);
     this.entryDateChangeHandler = this.entryDateChangeHandler.bind(this);
     this.getDate = this.getDate.bind(this);
+    this.logChange = this.logChange.bind(this);
+    // this.deleteJournal = this.deleteJournal.bind(this);
+
+    
 
 
 
@@ -209,38 +213,84 @@ class App extends React.Component {
         console.log("NO MATCHHHHH")
       }
     });
+  }
 
-    // this.setState(
-    //     {entries: updatedEntries,
-    //     requested: false,
-    //     inAddNewEntryMode: false}, () => {
-    //       console.log("ENTRIES UPDATED")
-    //     }
-    // )
+  // handleDelete(journal) {
+  //   const journals = this.state.journals.filter(item => item.id !== itemId);
+  //   this.setState({ journals: journals });
+  // };
+
+  // deleteJournal(event){
+  //   console.log("WORKKSS" + event.target.id)
+  //   var data = {
+  //       id: event.target.id
+  //   }
+  //   // fetch("/journals/delete", {
+  //   //     method: 'POST',
+  //   //     headers: {'Content-Type': 'application/json'},
+  //   //     body: JSON.stringify(data)
+  //   // }).then(function(response) {
+  //   //     if (response.status >= 400) {
+  //   //       throw new Error("Bad response from server");
+  //   //     }
+  //   //     return response.json();
+  //   // }).then(function(data) {
+  //   //     if(data === "success"){
+  //   //        alert("JOURNAL DELETEDD");  
+  //   //     }
+  //   // }).catch(function(err) {
+  //   //     console.log(err)
+  //   // });
+
+  //   var request = new XMLHttpRequest();
+
+  //   var componentThis = this;
+
+  //   request.addEventListener("load", function() {
+  //       console.log("DONE");
+  //       const responseData = JSON.parse( this.responseText );
+  //       console.log(this.responseText)
+  //       console.log( responseData );
+  //       // componentThis.addNewEntry( responseData );
+  //       // alert("WOW NEW ENTRY ADDDEDEDEDEDEDED");
+  //   });
+        
+  //   request.open("POST", '/journals/delete');
+  //   request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  //   request.send(JSON.stringify(data));
+
+  //   this.setState({requested:true});
+    
+    
+  // }
+
+
+  logChange(e) {
+    console.log(e.target.value)
+    this.setState({[e.target.name]: e.target.value});  
   }
 
 
+  // entryTitleChangeHandler(event){
+  //   console.log("$$$$$$ "+event.target.value);
+  //   this.setState({entryTitle: event.target.value});
+  //   console.log("entry title stateee "+ this.state.entryTitle);
+  // }
 
-  entryTitleChangeHandler(event){
-    console.log("$$$$$$ "+event.target.value);
-    this.setState({entryTitle: event.target.value});
-    console.log("entry title stateee "+ this.state.entryTitle);
-  }
+  // mediaChangeHandler(event){
+  //     console.log("$$$$$$ "+event.target.value);
+  //     this.setState({media: event.target.value});
+  // }
 
-  mediaChangeHandler(event){
-      console.log("$$$$$$ "+event.target.value);
-      this.setState({media: event.target.value});
-  }
+  // entryContentChangeHandler(event){
+  //     console.log("$$$$$$ "+event.target.value);
+  //     this.setState({entryContent: event.target.value});
+  // }
 
-  entryContentChangeHandler(event){
-      console.log("$$$$$$ "+event.target.value);
-      this.setState({entryContent: event.target.value});
-  }
-
-  entryLocationChangeHandler(event){
-      console.log("$$$$$$ "+event.target.value);
-      this.setState({entryLocation: event.target.value});
-  }
+  // entryLocationChangeHandler(event){
+  //     console.log("$$$$$$ "+event.target.value);
+  //     this.setState({entryLocation: event.target.value});
+  // }
 
   entryDateChangeHandler(date){
       // let formattedDate = moment(date).format("DD-MM-YYYY")
@@ -296,17 +346,21 @@ class App extends React.Component {
            
           <div className="col-6">
             <button onClick={this.getDate}>GET DATEE</button>
-            <Journal listTripEntries={this.clickHandler}/>
+            <Journal 
+              listTripEntries={this.clickHandler}
+              // deleteJournal={this.deleteJournal}
+            />
             <List 
               currentJournal={this.state.currentJournal}
               tripEntries={this.state.tripEntries}
               newEntryMode={this.newEntryMode}
               addNewEntry={this.addNewEntry}
               inAddNewEntryMode={this.state.inAddNewEntryMode}
-              entryTitleChangeHandler={this.entryTitleChangeHandler}
-              mediaChangeHandler={this.mediaChangeHandler}
-              entryContentChangeHandler={this.entryContentChangeHandler}
-              entryLocationChangeHandler={this.entryLocationChangeHandler}
+              // entryTitleChangeHandler={this.entryTitleChangeHandler}
+              // mediaChangeHandler={this.mediaChangeHandler}
+              // entryContentChangeHandler={this.entryContentChangeHandler}
+              // entryLocationChangeHandler={this.entryLocationChangeHandler}
+              logChange={this.logChange}
               entryDateChangeHandler={this.entryDateChangeHandler}
               submitEntry={this.submitEntry}
               showDateEntries={this.showDateEntries}
@@ -318,8 +372,8 @@ class App extends React.Component {
             <Entry 
                 dayEntries={this.state.dayEntries}
                 tripEntries={this.state.tripEntries} 
-                entries={this.state.entries}/>
-            {/* <Counter message={this.state.message} /> */}
+                entries={this.state.entries}
+            />
           </div>
         </div>
       </div>

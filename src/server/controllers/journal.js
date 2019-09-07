@@ -63,13 +63,24 @@ module.exports = (db) => {
       console.log(result)
       response.send(result[0]);
     });
-
-
   };
+
+  let deleteJournal = (request, response) => {
+    console.log(request.body); 
+    db.journal.deleteJournal(request.body,(error, result) => {
+      // TODO add conditionals that check for errors
+      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+      console.log(result)
+      response.send(result[0]);
+    });
+  };
+
+  
 
   return {
     getAll,
-    addNewJournal
+    addNewJournal,
+    deleteJournal
 
     // get : get,
     // apiget : apiget
