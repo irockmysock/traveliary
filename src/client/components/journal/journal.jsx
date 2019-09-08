@@ -16,6 +16,7 @@ class Journal extends React.Component {
       journalName: null,
       coverImg: null,
       createdDate: moment(),
+      updatedDate: moment(),
       userId: 1
     };
     this.submitAdd = this.submitAdd.bind(this);
@@ -137,7 +138,8 @@ class Journal extends React.Component {
         "journal_name": this.state.journalName,
         "cover_img": this.state.coverImg,
         "user_id": this.state.userId,
-        "id": this.state.journalId
+        "id": this.state.journalId,
+        "updated_date": this.state.updatedDate,
     };
 
     var request = new XMLHttpRequest();

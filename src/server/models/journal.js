@@ -70,8 +70,10 @@ module.exports = (dbPoolInstance) => {
     let coverImg = data.cover_img;
     let userId = data.user_id;
     let journalId = data.id
-    let query = "UPDATE journals SET journal_name=$1, cover_img=$2 WHERE user_id=$3 AND id=$4 RETURNING *";
-    const values = [journalName, coverImg, userId, journalId];
+    let updatedDate = data.updated_date
+
+    let query = "UPDATE journals SET journal_name=$1, cover_img=$2, updated_date=$3 WHERE user_id=$4 AND id=$5 RETURNING *";
+    const values = [journalName, coverImg, updatedDate, userId, journalId];
 
     dbPoolInstance.query(query, values, (error, queryResult) => {
       if (error) {
