@@ -340,11 +340,11 @@ class App extends React.Component {
   render() {
     return (
       
-      <div className=" text-center">
+      <div className="main">
        
         <div className="row">
            
-          <div className="col-6">
+          <div className="mysidebar">
             <button onClick={this.getDate}>GET DATEE</button>
             <Journal 
               listTripEntries={this.clickHandler}

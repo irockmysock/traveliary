@@ -77,39 +77,39 @@ class Journal extends React.Component {
     };
     
 
-    fetch("/journals/delete", {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-    }).then(function(response) {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return response.json();
-    }).then(function(data) {
-        if(data === "success"){
-           alert("JOURNAL DELETEDD");  
-        }
-    }).catch(function(err) {
-        console.log(err)
-    });
-
-    // var request = new XMLHttpRequest();
-
-    // var componentThis = this;
-
-    // request.addEventListener("load", function() {
-    //     console.log("DONE");
-    //     const responseData = JSON.parse( this.responseText );
-    //     console.log(this.responseText)
-    //     console.log( responseData );
-    //     componentThis.handleDelete( responseData.id );
-    //     alert("WOW DELETETETETD");
+    // fetch("/journals/delete", {
+    //     method: 'DELETE',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: JSON.stringify(data)
+    // }).then(function(response) {
+    //     if (response.status >= 400) {
+    //       throw new Error("Bad response from server");
+    //     }
+    //     return response.json();
+    // }).then(function(data) {
+    //     if(data === "success"){
+    //        alert("JOURNAL DELETEDD");  
+    //     }
+    // }).catch(function(err) {
+    //     console.log(err)
     // });
+
+    var request = new XMLHttpRequest();
+
+    var componentThis = this;
+
+    request.addEventListener("load", function() {
+        console.log("DONE");
+        const responseData = JSON.parse( this.responseText );
+        console.log(this.responseText)
+        console.log( responseData );
+        componentThis.handleDelete( responseData.id );
+        alert("WOW DELETETETETD");
+    });
         
-    // request.open("POST", '/journals/delete');
-    // request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    // request.send(JSON.stringify(data));
+    request.open("DELETE", '/journals/delete');
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
 
     this.setState({requested:true});
     
@@ -121,7 +121,8 @@ class Journal extends React.Component {
       {inEditMode: true,
       journalId: event.target.id,
       journalName: event.target.name,
-      coverImg: event.target.value
+      coverImg: event.target.value,
+      requested: false
       }
     );
     console.log("CLICKEDD")
@@ -139,14 +140,14 @@ class Journal extends React.Component {
 
     var request = new XMLHttpRequest();
 
-    var componentThis = this;
+    // var componentThis = this;
 
     request.addEventListener("load", function() {
         console.log("DONE");
         const responseData = JSON.parse( this.responseText );
         console.log(this.responseText)
         console.log( responseData );
-        componentThis.handleAdd( responseData );
+        // componentThis.handleEdit( responseData );
         alert("WOW DONE WITYH EDITTINGGN THING");
     });
         
