@@ -27,9 +27,10 @@ module.exports = (dbPoolInstance) => {
     let name = data.journal_name;
     let coverImg = data.cover_img;
     let user = data.user_id;
+    let date = data.created_date;
 
-    let query = "INSERT INTO journals (journal_name, cover_img, user_id) VALUES ($1, $2, $3) RETURNING *";
-    const values = [name, coverImg, user];
+    let query = "INSERT INTO journals (journal_name, cover_img, user_id, created_date) VALUES ($1, $2, $3, $4) RETURNING *";
+    const values = [name, coverImg, user, date];
 
     dbPoolInstance.query(query, values, (error, queryResult) => {
       if (error) {

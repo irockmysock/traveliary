@@ -1,4 +1,5 @@
 import React from 'react';
+var moment = require('moment');
 
 import styles from './style.scss';
 
@@ -14,6 +15,7 @@ class Journal extends React.Component {
       journalId: null,
       journalName: null,
       coverImg: null,
+      createdDate: moment(),
       userId: 1
     };
     this.submitAdd = this.submitAdd.bind(this);
@@ -176,7 +178,8 @@ class Journal extends React.Component {
     var data = { 
         "journal_name": this.state.journalName,
         "cover_img": this.state.coverImg,
-        "user_id": this.state.userId
+        "user_id": this.state.userId,
+        "created_date": this.state.createdDate
     };
 
     var request = new XMLHttpRequest();

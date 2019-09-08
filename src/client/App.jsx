@@ -1,6 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 var moment = require('moment');
+
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker-cssmodules.css";
 // import Moment from 'react-moment';
@@ -10,6 +11,7 @@ import Journal from './components/journal/journal';
 import Entry from './components/entry/entry';
 import List from './components/list/list';
 
+// import './style.scss';
 // import Counter from './components/counter/counter';
 // import Form from './components/form/form';
 
@@ -344,8 +346,8 @@ class App extends React.Component {
        
         <div className="row">
            
-          <div className="mysidebar">
-            <button onClick={this.getDate}>GET DATEE</button>
+          <div className="mysidebar col-6">
+            <button className="test" onClick={this.getDate}>GET DATEE</button>
             <Journal 
               listTripEntries={this.clickHandler}
               // deleteJournal={this.deleteJournal}

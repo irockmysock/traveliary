@@ -125,19 +125,19 @@ class List extends React.Component {
                   <React.Fragment>
                     <div>
                         title:
-                        <input onChange={(event)=>{this.props.entryTitleChangeHandler(event)}}/>
+                        <input name="entryTitle" onChange={(event)=>{this.props.logChange(event)}}/>
                     </div>
                     <div>
                         media:
-                        <input onChange={(event)=>{this.props.mediaChangeHandler(event)}}/>
+                        <input name="media" onChange={(event)=>{this.props.logChange(event)}}/>
                     </div>
                     <div>
                         content:
-                        <input onChange={(event)=>{this.props.entryContentChangeHandler(event)}}/>
+                        <input name="entryContent" onChange={(event)=>{this.props.logChange(event)}}/>
                     </div>
                     <div>
                         location:
-                        <input onChange={(event)=>{this.props.entryLocationChangeHandler(event)}}/>
+                        <input name="entryLocation" onChange={(event)=>{this.props.logChange(event)}}/>
                     </div>
 
                     {/* <div>

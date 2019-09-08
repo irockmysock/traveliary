@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS journals (
 	id SERIAL PRIMARY KEY,
 	journal_name TEXT,
 	cover_img TEXT,
-  	user_id INT
+  	user_id INT,
+	created_date DATE
 );
 
 -- create entries table
