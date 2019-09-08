@@ -10,19 +10,21 @@ class Journal extends React.Component {
       isLoaded: false,
       requested : false,
       inEditMode: false,
-      inAddMode: false,
       journals: [],
+      journalId: null,
       journalName: null,
       coverImg: null,
       userId: 1
     };
-    this.submit = this.submit.bind(this);
+    this.submitAdd = this.submitAdd.bind(this);
     this.deleteJournal = this.deleteJournal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.nameChangeHandler = this.nameChangeHandler.bind(this);
     this.coverImgChangeHandler = this.coverImgChangeHandler.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.submitEdit = this.submitEdit.bind(this);
 
-
+    
 
   }
 
@@ -66,14 +68,6 @@ class Journal extends React.Component {
       requested: false,}
     );
   };
-
-  handleEdit(journalId) {
-    this.setState(
-      {inEditMode: true
-      }
-    );
-  };
-
 
   deleteJournal(event){
     console.log("WORKKSS" + event.target.id)
@@ -122,14 +116,50 @@ class Journal extends React.Component {
     
   }
 
-//   userChangeHandler(event){
-//     console.log("@@@@@@@@ "+event.target.value);
-//     this.setState({user_id: event.target.value});
+  handleEdit(event) {
+    this.setState(
+      {inEditMode: true,
+      journalId: event.target.id,
+      journalName: event.target.name,
+      coverImg: event.target.value
+      }
+    );
+    console.log("CLICKEDD")
+  };
 
-//   }
+  submitEdit() {
+    console.log("EDITTT", this.state);
+
+    var data = { 
+        "journal_name": this.state.journalName,
+        "cover_img": this.state.coverImg,
+        "user_id": this.state.userId,
+        "id": this.state.journalId
+    };
+
+    var request = new XMLHttpRequest();
+
+    var componentThis = this;
+
+    request.addEventListener("load", function() {
+        console.log("DONE");
+        const responseData = JSON.parse( this.responseText );
+        console.log(this.responseText)
+        console.log( responseData );
+        componentThis.handleAdd( responseData );
+        alert("WOW DONE WITYH EDITTINGGN THING");
+    });
+        
+    request.open("PUT", '/journals/edit');
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
+
+    this.setState({requested:true});
+
+    }
   
 
-  addNewJournal(journal) {
+  handleAdd(journal) {
     console.log("RERERERERERERERERERERERERERERERERRE");
     console.log( journal );
     this.setState(
@@ -139,7 +169,7 @@ class Journal extends React.Component {
   }
 
 
-  submit(){
+  submitAdd(){
     console.log("WIOW SUBMIT", this.state);
 
     var data = { 
@@ -157,7 +187,7 @@ class Journal extends React.Component {
         const responseData = JSON.parse( this.responseText );
         console.log(this.responseText)
         console.log( responseData );
-        componentThis.addNewJournal( responseData );
+        componentThis.handleAdd( responseData );
         alert("WOW DONE WITYH CREATING THING");
     });
         
@@ -191,16 +221,20 @@ class Journal extends React.Component {
                 <button id={journal.id} onClick={this.props.listTripEntries}>
                   show journal entries
                 </button>
-                <button id={journal.id} onClick={this.editJournal}>Edit</button> 
+                <button id={journal.id} name={journal.journal_name} value={journal.cover_img} onClick={this.handleEdit}>Edit</button> 
                 <button id={journal.id} onClick={this.deleteJournal}>Delete</button>
                 </li>
                 ))}
             </ul>
 
             <Form 
+              inEditMode={this.state.inEditMode}
+              journalName={this.state.journalName}
+              coverImg={this.state.coverImg}
               nameChangeHandler={this.nameChangeHandler}
               coverImgChangeHandler={this.coverImgChangeHandler}
-              submit={this.submit}
+              submitAdd={this.submitAdd}
+              submitEdit={this.submitEdit}
             />
             </React.Fragment>    
             );
@@ -219,7 +253,6 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inEditMode: false,
       inAddMode: false,
     }
     this.activateAddMode = this.activateAddMode.bind(this);
@@ -244,10 +277,25 @@ class Form extends React.Component {
             <input onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
           </div>
 
-          <button className={"btn btn-primary"} onClick={this.props.submit}>Add New Diary</button>
+          <button className={"btn btn-primary"} onClick={this.props.submitAdd}>Add New Diary</button>
           
         </React.Fragment>
       );
+      } else if (this.props.inEditMode === true) {
+        return (
+          <React.Fragment>
+            <div>
+              name:
+              <input value={this.props.journalName} onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
+            </div>
+            <div>
+              cover:
+              <input value={this.props.coverImg} onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+            </div>
+
+            <button className={"btn btn-primary"} onClick={this.props.submitEdit}>EDITT Diary</button>
+          </React.Fragment>
+        );
       } else {
         return (
           <React.Fragment>
