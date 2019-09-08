@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS journals (
 	journal_name TEXT,
 	cover_img TEXT,
   	user_id INT,
-	created_date DATE
+	created_date DATE,
+	updated_date DATE
 );
 
 -- create entries table
