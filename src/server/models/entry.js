@@ -41,31 +41,34 @@ module.exports = (dbPoolInstance) => {
         });
     }
     
+    let deleteAllJournalEntries = (data,callback) => {
+
+        let journalId = data.journal_id;
+        let query = "DELETE FROM entries WHERE journal_id=$1";
+        const values = [journalId];
+    
+        dbPoolInstance.query(query, values, (error, queryResult) => {
+          if (error) {
+            // invoke callback function with results after query has executed
+            callback(error, null);
+          } else {
+            // invoke callback function with results after query has executed
+    
+            callback(null, queryResult.rows );
+          }
+        });
+      };
+    
 
 
-    // let getEntriesByJournal = (journal_id,callback) => {
-    
-    //     let query = "SELECT * FROM entries WHERE journal_id=$1";
-    //     const values = [journal_id];
-    
-    //     dbPoolInstance.query(query, values, (error, queryResult) => {
-    //       if (error) {
-    //         // invoke callback function with results after query has executed
-    //         callback(error, null);
-    //       } else {
-    //         // invoke callback function with results after query has executed
-    
-    //         callback(null, queryResult.rows );
-    //       }
-    //     });
-    // };
+
   
 
   
-    return {
-      getAllEntries,
-      addNewEntry,
-    //   getEntriesByJournal
+    return { 
+        getAllEntries,
+        addNewEntry,
+        deleteAllJournalEntries
     };
   };
   

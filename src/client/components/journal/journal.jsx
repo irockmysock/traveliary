@@ -78,7 +78,6 @@ class Journal extends React.Component {
     var data = { 
       "journal_id": event.target.id
     };
-    
 
     // fetch("/journals/delete", {
     //     method: 'DELETE',
@@ -115,8 +114,31 @@ class Journal extends React.Component {
     request.send(JSON.stringify(data));
 
     this.setState({requested:true});
-    
-    
+  }
+
+  deleteAllJournalEntries(event) {
+    var data = { 
+      "journal_id": event.target.id
+    };
+    console.log("DELETEING ALL ENTRIES IN JOURNAL " + event.target.id)
+    var request = new XMLHttpRequest();
+
+    var componentThis = this;
+
+    request.addEventListener("load", function() {
+        console.log("DONE");
+        const responseData = JSON.parse( this.responseText );
+        console.log(this.responseText)
+        console.log( responseData );
+        componentThis.handleDelete( responseData.id );
+        alert("WOW ENTRIES DELETETETETD");
+    });
+        
+    request.open("DELETE", '/journalentries/delete');
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
+
+    this.setState({requested:true});
   }
 
   handleEdit(event) {
@@ -227,8 +249,19 @@ class Journal extends React.Component {
                 <button id={journal.id} onClick={this.props.listTripEntries}>
                   show journal entries
                 </button>
-                <button id={journal.id} name={journal.journal_name} value={journal.cover_img} onClick={this.handleEdit}>Edit</button> 
-                <button id={journal.id} onClick={this.deleteJournal}>Delete</button>
+                <button 
+                  id={journal.id} 
+                  name={journal.journal_name} 
+                  value={journal.cover_img} 
+                  onClick={this.handleEdit}>EDIT
+                </button> 
+                <button 
+                  id={journal.id} 
+                  onClick={(event) => {
+                    this.deleteJournal(event);
+                    this.deleteAllJournalEntries(event);
+                  }}>Delete
+                </button>
                 </li>
                 ))}
             </ul>

@@ -17,7 +17,8 @@ module.exports = (db) => {
     };
 
     let addNewEntry = (request, response) => {
-        console.log(request.body); 
+        console.log(request.body);
+
         db.entry.addNewEntry(request.body,(error, result) => {
           // TODO add conditionals that check for errors
           console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
@@ -26,28 +27,26 @@ module.exports = (db) => {
         });
     };
 
+    let deleteAllJournalEntries = (request, response) => {
+        console.log(request.body);
 
-    // let getEntriesByJournal = (request, response) => {
-  
-    //     db.entry.getEntriesByJournal((error, entries) => {
-    //       // queryResult contains pokemon data returned from the pokemon model
-    //       if (error) {
-    //         console.error('error getting journals', error);
-    //         response.status(500);
-    //         response.send('server error');
-    //       } else {
-    //         response.send({entries: entries});
-    //         console.log(entries)
-    //       }
-    //     });
-    //   };
+        db.entry.deleteAllJournalEntries(request.body,(error, result) => {
+          // TODO add conditionals that check for errors
+          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+          console.log(result)
+          response.send(result[0]);
+        });
+    };
+
+    
+
+    
   
     return {
     getAll,
     addNewEntry,
-    // getEntriesByJournal
-
+    deleteAllJournalEntries,
     }
-  
+
   };
   
