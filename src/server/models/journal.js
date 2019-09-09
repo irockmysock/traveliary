@@ -22,7 +22,7 @@ module.exports = (dbPoolInstance) => {
     });
   };
 
-  let addNewJournal = (data,callback) => {
+  let addNewJournal = (data, callback) => {
 
     let name = data.journal_name;
     let coverImg = data.cover_img;
@@ -58,7 +58,7 @@ module.exports = (dbPoolInstance) => {
       } else {
         // invoke callback function with results after query has executed
 
-        callback(null, queryResult.rows );
+        callback(null, journalId);
       }
     });
   };

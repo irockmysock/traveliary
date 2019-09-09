@@ -3,10 +3,26 @@ html, body {
   min-width: 700px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
 body{
-  padding: 20px;
+  padding: 0;
 }
 
-button.test{
-  background-color: green;
+.appContainer {
+  padding-left: 15px;
+  height: 800px;
+}
+
+.mySidebar{
+  background-color:rgba(46,46,46,1);
+  color: rgba(112,112,112,1);
+  height:800px
+}
+
+.sideBarHeader {
+  background-color: rgba(54,184,211,1);
+  color:white;
+  box-sizing: border-box;
+  height: 5%;
+  padding:10px;
 }

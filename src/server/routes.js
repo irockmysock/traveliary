@@ -1,8 +1,11 @@
+var multer = require('multer');
+var upload = multer({ dest: './uploads/' });
+
 module.exports = (app, db) => {
 
   const journals = require('./controllers/journal')(db);
   app.get('/journals', journals.getAll);
-  app.post('/journals/new', journals.addNewJournal);
+  app.post('/journals/new', upload.single('coverImg'), journals.addNewJournal);
   app.delete('/journals/delete', journals.deleteJournal);  
   app.put('/journals/edit', journals.editJournal);
 

@@ -34,7 +34,7 @@ module.exports = (db) => {
           // TODO add conditionals that check for errors
           console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
           console.log(result)
-          response.send(result[0]);
+          response.send(result);
         });
     };
 

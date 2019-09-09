@@ -11,7 +11,7 @@ import Journal from './components/journal/journal';
 import Entry from './components/entry/entry';
 import List from './components/list/list';
 
-// import './style.scss';
+import styles from './style.scss';
 // import Counter from './components/counter/counter';
 // import Form from './components/form/form';
 
@@ -52,14 +52,8 @@ class App extends React.Component {
     this.getDate = this.getDate.bind(this);
     this.logChange = this.logChange.bind(this);
     // this.deleteJournal = this.deleteJournal.bind(this);
-
-    
-
-
-
-    
-
   }
+  
   getDate() {
 
     // let now = moment().format("YYYY-MM-DD");
@@ -338,20 +332,83 @@ class App extends React.Component {
     
   }    
 
+  // showWidget(widget) {
+  //   widget.open();
+  //   // console.log("YEA")
+  // }
+
+  // fileChangeHandler(event) {
+  //   console.log(event);
+  // }
+
+  // Upload() {
+  //   const [image, setImage] = useState('')
+  //   const [loading, setLoading] = useState(false)
+  
+  //   const uploadImage = async e => {
+  //     const files = e.target.files
+  //     const data = new FormData()
+  //     data.append('file', files[0])
+  //     data.append('upload_preset', 'cphn5mq5')
+  //     setLoading(true)
+  //     const res = await fetch(
+  //       '	https://api.cloudinary.com/v1_1/irockmysock',
+  //       {
+  //         method: 'POST',
+  //         body: data
+  //       }
+  //     )
+  //     const file = await res.json()
+  
+  //     setImage(file.secure_url)
+  //     setLoading(false)
+  //   }
+  
+  //   return (
+  //     <div className="App">
+  //       <h1>Upload Image</h1>
+  //       <input
+  //         type="file"
+  //         name="file"
+  //         placeholder="Upload an image"
+  //         onChange={uploadImage}
+  //       />
+  //       {loading ? (
+  //         <h3>Loading...</h3>
+  //       ) : (
+  //         <img src={image} style={{ width: '300px' }} />
+  //       )}
+  //     </div>
+  //   )
+  // }
 
   render() {
+    // let widget = window.cloudinary.createUploadWidget({
+    //   cloudName: 'irockmysock', 
+    //   uploadPreset: 'cphn5mq5'}, (error, result) => { 
+    //     if (!error && result && result.event === "success") { 
+    //       console.log('Done! Here is the image info: ', result.info); 
+    //     }
+    //   }
+    // )
+
     return (
       
-      <div className="main">
+      <div className={styles.appContainer}>
        
         <div className="row">
            
-          <div className="mysidebar col-6">
-            <button className="test" onClick={this.getDate}>GET DATEE</button>
+          <div className={styles.mySidebar + " col-4 mt-0 p-0"}>
+            
+            <div className={styles.sideBarHeader + " text-center"}>
+              <h3>TRAVELIARY</h3>
+            </div>
+            
             <Journal 
               listTripEntries={this.clickHandler}
               // deleteJournal={this.deleteJournal}
             />
+      
             <List 
               currentJournal={this.state.currentJournal}
               tripEntries={this.state.tripEntries}
@@ -369,7 +426,7 @@ class App extends React.Component {
               entryDate={this.state.entryDate}
             />
           </div>
-          <div className="col-6">
+          <div className="col-8">
             Journal entries
             <Entry 
                 dayEntries={this.state.dayEntries}
@@ -384,3 +441,10 @@ class App extends React.Component {
 }
 
 export default hot(module)(App);
+
+
+
+
+{/* <button className={styles.test} onClick={this.showWidget}>WIDGET</button>
+            UPLOADDDD
+            <input type="file" onChange={this.fileChangeHandler}/> */}

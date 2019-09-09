@@ -1,0 +1,36 @@
+.listEntry {
+    background-color: white;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid rgba(100, 101, 101, 0.721)
+}
+
+.listDate {
+   background-color:rgba(245, 245, 245, 0.9);
+   display: inline-block;
+   margin: 0;
+}
+
+.openIcon {
+    display: inline;
+    background-color: red;
+}
+
+.listImage {
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid rgba(235, 242, 244, 0.8);
+}
+
+.listImgContainer {
+    height: 100%;
+}
+
+.dateEntryList {
+    border: 0;
+    height:50%;
+}
+
+.dateEntryHeader {
+    height: 5%;
+}

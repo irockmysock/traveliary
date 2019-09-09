@@ -105,8 +105,9 @@ class Journal extends React.Component {
         const responseData = JSON.parse( this.responseText );
         console.log(this.responseText)
         console.log( responseData );
-        componentThis.handleDelete( responseData.id );
-        alert("WOW DELETETETETD");
+        componentThis.handleDelete( responseData );
+        // alert("Journal Deleted");
+        console.log("Journal Deleted")
     });
         
     request.open("DELETE", '/journals/delete');
@@ -131,7 +132,7 @@ class Journal extends React.Component {
         console.log(this.responseText)
         console.log( responseData );
         componentThis.handleDelete( responseData.id );
-        alert("WOW ENTRIES DELETETETETD");
+        console.log("JOURNAL ENTRIES DELETETETETD");
     });
         
     request.open("DELETE", '/journalentries/delete');
@@ -187,7 +188,7 @@ class Journal extends React.Component {
   
 
   handleAdd(journal) {
-    console.log("RERERERERERERERERERERERERERERERERRE");
+    console.log("HANDLING ADDDD");
     console.log( journal );
     this.setState(
         {journals:[journal,...this.state.journals], 
@@ -210,13 +211,14 @@ class Journal extends React.Component {
 
     var componentThis = this;
 
-    request.addEventListener("load", function() {
+    request.addEventListener("load", function(event) {
         console.log("DONE");
         const responseData = JSON.parse( this.responseText );
         console.log(this.responseText)
         console.log( responseData );
         componentThis.handleAdd( responseData );
-        alert("WOW DONE WITYH CREATING THING");
+        event.preventDefault()
+        console.log("New journal created!!!");
     });
         
     request.open("POST", '/journals/new');
@@ -235,47 +237,70 @@ class Journal extends React.Component {
       return <div>Loading...</div>;
     } else if (!this.state.requested) {
         return (
-            <React.Fragment>
-           
-                <h2>My Diaries</h2>
-                
+            <div className={styles.journalContainer}>
+              <div className={styles.journalHeader}>
+                <h5>MY JOURNALS</h5>
+              </div>
+            
+                <div className={styles.journalCardContainer + " row m-1 d-flex flex-wrap justify-content-start overflow-auto"}>
 
-            <ul>
-                {journals.map(journal => (
+                  {journals.map(journal => (
+                    <div key={journal.id} className={styles.mycard}>
+                      <img id={journal.id} onClick={this.props.listTripEntries} className={styles.mycardimg} src={journal.cover_img}/>
+                      
+                      <button 
+                          className={styles.cardDeleteIcon + " fas fa-times fa-xs"}
+                          id={journal.id} 
+                          onClick={(event) => {
+                            this.deleteJournal(event);
+                            this.deleteAllJournalEntries(event);
+                          }}>
+                        </button>
 
-                <li key={journal.id}>
-                    {journal.journal_name} 
-                {/* <img src={journal.cover_img}/> */}
-                <button id={journal.id} onClick={this.props.listTripEntries}>
-                  show journal entries
-                </button>
-                <button 
-                  id={journal.id} 
-                  name={journal.journal_name} 
-                  value={journal.cover_img} 
-                  onClick={this.handleEdit}>EDIT
-                </button> 
-                <button 
-                  id={journal.id} 
-                  onClick={(event) => {
-                    this.deleteJournal(event);
-                    this.deleteAllJournalEntries(event);
-                  }}>Delete
-                </button>
-                </li>
-                ))}
-            </ul>
+                      <div className={styles.myCardTitleContainer}> 
+                        <p className={styles.mycardtext}>{journal.journal_name}</p>
+                        <button 
+                          className={styles.cardEditIcon + " fas fa-edit fa-xs"}
+                          id={journal.id} 
+                          name={journal.journal_name} 
+                          value={journal.cover_img} 
+                          onClick={this.handleEdit}>
+                        </button>
+                        
+                      </div>
+                      
+                      {/* <div className={styles.mycardfooter + " d-flex justify-content-between"}>  */}
+                        {/* <button 
+                          className={styles.cardEditIcon + " fas fa-edit fa-xs"}
+                          id={journal.id} 
+                          name={journal.journal_name} 
+                          value={journal.cover_img} 
+                          onClick={this.handleEdit}>
+                        </button> */}
+                        
+                        
+                      {/* </div> */}
 
-            <Form 
-              inEditMode={this.state.inEditMode}
-              journalName={this.state.journalName}
-              coverImg={this.state.coverImg}
-              nameChangeHandler={this.nameChangeHandler}
-              coverImgChangeHandler={this.coverImgChangeHandler}
-              submitAdd={this.submitAdd}
-              submitEdit={this.submitEdit}
-            />
-            </React.Fragment>    
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mycontainer">
+                  
+                  <Form 
+                    inEditMode={this.state.inEditMode}
+                    journalName={this.state.journalName}
+                    coverImg={this.state.coverImg}
+                    nameChangeHandler={this.nameChangeHandler}
+                    coverImgChangeHandler={this.coverImgChangeHandler}
+                    submitAdd={this.submitAdd}
+                    submitEdit={this.submitEdit}
+                    />
+                </div>
+
+              
+
+            </div>
             );
 
     } else {
@@ -306,23 +331,32 @@ class Form extends React.Component {
   render() {
     if (this.state.inAddMode === true) {
       return (
-        <React.Fragment>
-          <div>
-            name:
-            <input onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
+        <div classname="container">
+          <div classname="input-group">
+            <div classname="input-group-prepend">
+              <span classname="input-group-text" id="">Diary Name</span>
+            </div>
+            <input type="text" classname="form-control" onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
           </div>
-          <div>
-            cover:
-            <input onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+          <div classname="input-group justify-content-between">
+            <div classname="input-group-prepend">
+              <span classname="input-group-text" id="">Cover Image</span>
+            </div>
+            <input type="text" classname="form-control" onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+            UPLOAD
+            <input type="file" onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+            
           </div>
 
           <button className={"btn btn-primary"} onClick={this.props.submitAdd}>Add New Diary</button>
+
+
           
-        </React.Fragment>
+        </div>
       );
       } else if (this.props.inEditMode === true) {
         return (
-          <React.Fragment>
+          <div classname="container">
             <div>
               name:
               <input value={this.props.journalName} onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
@@ -333,18 +367,55 @@ class Form extends React.Component {
             </div>
 
             <button className={"btn btn-primary"} onClick={this.props.submitEdit}>EDITT Diary</button>
-          </React.Fragment>
+          </div>
         );
       } else {
         return (
-          <React.Fragment>
+          <div classname="container">
             
-            <button className={"btn btn-primary"} onClick={this.activateAddMode}>+++</button>
+            <button className={styles.addButton + " fas fa-plus-square"} onClick={this.activateAddMode}></button>
             
-          </React.Fragment>
+          </div>
         );
       }
     }
 }
 
 export default Journal;
+
+
+
+// function submitPhoto(){
+//     var formData = new FormData();
+//     console.log(this.files)
+//     if (this.files && this.files.length === 1){
+//         var file = this.files[0]
+//         var fileName = file.name
+//         var ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+//         if (ext == "png" || ext == "jpeg" || ext == "jpg") {
+//             //Perform Ajax
+        
+//             formData.set("file", file , fileName);
+//             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+//             xmlhttp.addEventListener("load", function(){
+//                 // let previewContainer = document.getElementById("card-preview");
+//                 // document.getElementById("card-preview-text").style.display='none';
+//                 // previewContainer.style.backgroundImage= `url(${this.responseText})`;
+//                 // previewContainer.style.backgroundSize = 'cover';
+//                 // let uploadForm = document.getElementById('upload-form');
+//                 // if (uploadForm.children.length <=1){
+//                 //     let button = document.createElement('button');
+//                 //     button.innerText = "Upload Business Card";
+//                 //     button.className = "btn upload-btn";
+//                 //     uploadForm.appendChild(button);
+//                 // }
+//             });
+//             xmlhttp.open("POST", '/uploadCloudinary');
+//             xmlhttp.send(formData);
+//         } else {
+//             document.getElementById("card-preview-text").innerText="-- Error in file 1 --";
+//         }
+//     } else {
+//         document.getElementById("card-preview-text").innerText="-- Error in file 2 --";
+//     }
+// }

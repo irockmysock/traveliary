@@ -56,19 +56,20 @@ module.exports = (db) => {
 
   let addNewJournal = (request, response) => {
     console.log(request.body); 
-    db.journal.addNewJournal(request.body,(error, result) => {
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+    db.journal.addNewJournal(request.body, (error, result) => {
+      console.log('~~~~~NEW JOURNAL~~~~~~~~~~~');
       console.log(result)
       response.send(result[0]);
     });
   };
+
 
   let deleteJournal = (request, response) => {
     console.log(request.body); 
     db.journal.deleteJournal(request.body,(error, result) => {
       console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
       console.log(result)
-      response.send(result[0]);
+      response.send(result);
     });
   };
   
@@ -93,3 +94,16 @@ module.exports = (db) => {
   }
 
 };
+
+
+
+// var cloudinary = require('cloudinary');
+
+// cloudinary.config({
+//     cloud_name: 'irockmysock',
+//     api_key: '933467472654765',
+//     api_secret: 'QHHJj_0tTrWQX_CoeuQVgtIdgDM'
+// });
+
+// cloudinary.uploader.upload(request.file.path, function(photoResult) {
+      // db.journal.addNewJournal(request.body, photoResult.url, (error, results) => {

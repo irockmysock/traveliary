@@ -36,7 +36,7 @@ class List extends React.Component {
                     return(
                         <div>
                             <h2>NOOO LISTTT</h2>
-                            <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>
+                            {/* <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button> */}
                             {headers}
                         </div>
                     )
@@ -95,17 +95,34 @@ class List extends React.Component {
             let headers = Object.keys(cats).map((key, index) => {
                 let entries = this.props.tripEntries.map((entry, index) => {
                     if (entry.entry_date === key){
-                        return <li>{entry.title}</li>
+                        return (
+                            // <div className="row">
+                            <React.Fragment>
+                                <div className={styles.listImgContainer + " col-3 p-0"}>
+                                    <img className={styles.listImage} src={entry.media}/>
+                                </div>
+                                <div className="col-9">
+                                    {entry.title}
+                                </div>
+                            </React.Fragment>
+                            // </div>
+                        )
                     }
                 })
                 return (
-                    <React.Fragment key={index}>
-                        <h2><Moment format="DD">{key}</Moment>th</h2>
-                        <button id={key} onClick={this.props.showDateEntries}>SHOW</button>
-                        <ul>
+                    <div className={styles.listDate} key={index}>
+                        <h5 className={styles.listDate}>
+                            <Moment format="DD MMM YY">{key}</Moment>
+                        </h5>
+                        <button 
+                            className={styles.openIcon + " fas fa-book-open"}
+                            id={key} 
+                            onClick={this.props.showDateEntries}>
+                        </button>
+                        <div className={styles.listEntry + " row m-0"}>
                             {entries}
-                        </ul>
-                    </React.Fragment>
+                        </div>
+                    </div>
                     
                 )
             });
@@ -113,11 +130,15 @@ class List extends React.Component {
             
             if (!this.props.inAddNewEntryMode) {
                 return(
-                    <div>
-                        <h2>New List</h2>
-                        <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>
+                    <React.Fragment>
+                    <div className={styles.dateEntryHeader + " row m-1"}>
+                        <h5>{this.props.tripEntries[0].entry_location}</h5>
+                        <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>    
+                    </div>
+                    <div className={styles.dateEntryList}>
                         {headers}
                     </div>
+                    </React.Fragment>
                 )
             } else {
                 
