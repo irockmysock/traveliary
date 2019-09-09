@@ -29,14 +29,18 @@ class List extends React.Component {
         //       <div>LISTTTT</div>
         //   )
             let cats = {};
-            if (this.props.tripEntries.length === 0) {
-
+            if (this.props.tripEntries.length === 0 && this.props.currentJournal === 0) {
+                return(
+                    <div>
+                        <h2>NOOO LISTTT</h2>
+                    </div>
+                )
+            } else if (this.props.tripEntries.length === 0 && this.props.currentJournal !== 0) {
 
                 if (!this.props.inAddNewEntryMode) {
                     return(
                         <div>
-                            <h2>NOOO LISTTT</h2>
-                            {/* <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button> */}
+                            <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>
                             {headers}
                         </div>
                     )
@@ -96,32 +100,36 @@ class List extends React.Component {
                 let entries = this.props.tripEntries.map((entry, index) => {
                     if (entry.entry_date === key){
                         return (
-                            // <div className="row">
-                            <React.Fragment>
+                            <div className={styles.listEntry + " row m-0"}>
                                 <div className={styles.listImgContainer + " col-3 p-0"}>
                                     <img className={styles.listImage} src={entry.media}/>
                                 </div>
-                                <div className="col-9">
-                                    {entry.title}
+                                <div className={styles.listContentContainer + " col-9 p-1"}>
+                                    <div className="row m-0">
+                                        <p className={styles.listEntryTitleText}>{entry.title}</p>   
+                                    </div>
+                                    <div className={styles.listEntryTextContainer + " m-0 row"}>
+                                        <p className={styles.listText}>{entry.entry_content}</p>
+                                    </div>
                                 </div>
-                            </React.Fragment>
-                            // </div>
+                            </div>
                         )
                     }
                 })
                 return (
-                    <div className={styles.listDate} key={index}>
-                        <h5 className={styles.listDate}>
-                            <Moment format="DD MMM YY">{key}</Moment>
-                        </h5>
-                        <button 
-                            className={styles.openIcon + " fas fa-book-open"}
-                            id={key} 
-                            onClick={this.props.showDateEntries}>
-                        </button>
-                        <div className={styles.listEntry + " row m-0"}>
-                            {entries}
+                    <div className={styles.dateEntriesContainer} key={index}>
+                        <div className={styles.entryDateHeader}>
+                            <p className={styles.listDateText}>
+                                <Moment format="DD MMM YY">{key}</Moment>
+                            </p>
+                            <button 
+                                className={styles.openIcon + " fas fa-book-open"}
+                                id={key} 
+                                onClick={this.props.showDateEntries}>
+                            </button>
                         </div>
+                            
+                        {entries}
                     </div>
                     
                 )
@@ -135,7 +143,7 @@ class List extends React.Component {
                         <h5>{this.props.tripEntries[0].entry_location}</h5>
                         <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>    
                     </div>
-                    <div className={styles.dateEntryList}>
+                    <div className={styles.listContainer}>
                         {headers}
                     </div>
                     </React.Fragment>

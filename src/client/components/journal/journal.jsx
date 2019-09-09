@@ -242,7 +242,7 @@ class Journal extends React.Component {
                 <h5>MY JOURNALS</h5>
               </div>
             
-                <div className={styles.journalCardContainer + " row m-1 d-flex flex-wrap justify-content-start overflow-auto"}>
+                <div className={styles.journalCardContainer + " row d-flex flex-wrap justify-content-start overflow-auto"}>
 
                   {journals.map(journal => (
                     <div key={journal.id} className={styles.mycard}>

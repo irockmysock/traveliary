@@ -398,7 +398,7 @@ class App extends React.Component {
        
         <div className="row">
            
-          <div className={styles.mySidebar + " col-4 mt-0 p-0"}>
+          <div className={styles.mySidebar + " col-3 mt-0 p-0"}>
             
             <div className={styles.sideBarHeader + " text-center"}>
               <h3>TRAVELIARY</h3>
@@ -426,8 +426,12 @@ class App extends React.Component {
               entryDate={this.state.entryDate}
             />
           </div>
-          <div className="col-8">
-            Journal entries
+          <div className={styles.mainContentContainer + " col-9"}>
+            <div className={styles.mainContentHeader + " row"}>
+              <div className="col-12 text-center">
+                <h3>My Diary Entries</h3>
+              </div>
+            </div>
             <Entry 
                 dayEntries={this.state.dayEntries}
                 tripEntries={this.state.tripEntries} 

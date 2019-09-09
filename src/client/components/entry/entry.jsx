@@ -16,22 +16,24 @@ class Entry extends React.Component {
       if (this.props.tripEntries.length === 0) {
         let listResults = this.props.entries.map( (result, id) => {
             return (
-            <li key={id} className="list-group-item">
-                <Moment format="DD/MM">
-                    {result.entry_date}
-                </Moment>
-                <p>{result.title}</p> 
+            <div key={id} className="list-group-item px-5">
+                <div className={styles.entryHeaderText}>
+                    <Moment className={styles.entryDateText} format="llll">
+                        {result.entry_date}
+                    </Moment>
+                    <h5>{result.title}</h5>
+                </div> 
                 <p>{result.entry_content}</p>
-            </li>
+                <img src={result.media} className={styles.entryImg}/>
+            </div>
             )
         });
 
         return (
-            <div className="searchResults">
-              <h1>Journal entries</h1>
-              <ul>
+            <div className={styles.mainContentContainer + " row"}> 
+              <div className={styles.allEntriesContainer}>
                 {listResults}   
-              </ul>
+              </div>
             </div>
           
         );
@@ -40,45 +42,51 @@ class Entry extends React.Component {
         let listResults = this.props.tripEntries.map( (result, id) => {
         
             return (
-            <li key={id} className="list-group-item">
-                <Moment format="DD/MM">
-                    {result.entry_date}
-                </Moment>
-                <p>{result.title}</p> 
-                <p>{result.entry_content}</p>
-            </li>
+                <div key={id} className="list-group-item px-5">
+                    <div className={styles.entryHeaderText}>
+                        <Moment className={styles.entryDateText} format="llll">
+                            {result.entry_date}
+                        </Moment>
+                        <h5>{result.title}</h5>
+                    </div> 
+                    <p>{result.entry_content}</p>
+                    <img src={result.media} className={styles.entryImg}/>
+                </div>
+
             )
         });
 
         return (
-            <div className="searchResults">
-              <h1>Journal entries</h1>
-              <ul>
+            <div className={styles.mainContentContainer + " row"}> 
+              <div className={styles.allEntriesContainer}>
                 {listResults}   
-              </ul>
+              </div>
             </div>
+
           
         );
     } else {
         let listResults = this.props.dayEntries.map( (result, id) => {
         
             return (
-            <li key={id} className="list-group-item">
-                <Moment format="DD/MM">
-                    {result.entry_date}
-                </Moment>
-                <p>{result.title}</p> 
-                <p>{result.entry_content}</p>
-            </li>
+                <div key={id} className="list-group-item px-5">
+                    <div className={styles.entryHeaderText}>
+                        <Moment className={styles.entryDateText} format="llll">
+                            {result.entry_date}
+                        </Moment>
+                        <h5>{result.title}</h5>
+                    </div> 
+                    <p>{result.entry_content}</p>
+                    <img src={result.media} className={styles.entryImg}/>
+                </div>
             )
         });
 
         return (
-            <div className="searchResults">
-              <h1>Journal entries</h1>
-              <ul>
+            <div className={styles.mainContentContainer + " row"}> 
+              <div className={styles.allEntriesContainer}>
                 {listResults}   
-              </ul>
+              </div>
             </div>
           
         );

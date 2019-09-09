@@ -1,36 +1,73 @@
+.listContainer {
+    border: 0;
+    height:50%;
+}
+
+.dateEntriesContainer {
+
+   display: inline-block;
+   margin: 0;
+}
+
+.entryDateHeader{ 
+    background-color: rgba(11,11,11,1);
+    height: 20px;
+    position: relative;
+    border-bottom: 1px solid rgba(0,50,148,1);
+    border-top: 1px solid rgba(0,50,148,1);
+}
+
+
+.listDateText {
+    font-size: 12px;
+    margin-bottom: 0;
+   
+}
+
+.openIcon {
+    border: none;
+    background-color: rgba(11,11,11,1);
+    font-size: 12px;
+    color: rgb(85, 216, 242);
+    position: absolute;
+    right: 0;
+    top: 2px;
+}
+
 .listEntry {
-    background-color: white;
+    background-color: rgba(36, 36, 36, 1);
     width: 100%;
     height: 50px;
     border-bottom: 1px solid rgba(100, 101, 101, 0.721)
 }
 
-.listDate {
-   background-color:rgba(245, 245, 245, 0.9);
-   display: inline-block;
-   margin: 0;
-}
-
-.openIcon {
-    display: inline;
-    background-color: red;
-}
-
-.listImage {
-    width: 100%;
-    height: 100%;
-    border-right: 1px solid rgba(235, 242, 244, 0.8);
-}
-
 .listImgContainer {
     height: 100%;
 }
-
-.dateEntryList {
-    border: 0;
-    height:50%;
+.listImage {
+    width: 100%;
+    height: 100%;
 }
+
+.listContentContainer {
+    height: 100%;
+}
+
+.listEntryTitleText {
+    font-size: 11px;
+    margin: 0;
+}
+
+.listEntryTextContainer {
+    height: 60%;
+    overflow: hidden;
+}
+
 
 .dateEntryHeader {
     height: 5%;
+}
+
+.listText {
+    font-size: 8px;
 }
