@@ -244,6 +244,17 @@ class Journal extends React.Component {
             
                 <div className={styles.journalCardContainer + " row d-flex flex-wrap justify-content-start overflow-auto"}>
 
+                  <div className={styles.mycard}>
+                    <img onClick={this.props.listTripEntries} className={styles.mycardimg} src="https://www.bestfunforall.com/better/imgs/Black%20&%20White%20Butterfly%20wallpaper%20%202.jpg"/>
+                    <button 
+                        className={styles.cardAddIcon + " fas fa-plus-square"}
+                        onClick={this.handleEdit}>
+                      </button>
+                    <div className={styles.myCardTitleContainer}> 
+                      <p className={styles.addNewCardText}>Add New Diary</p>
+                    </div>
+                  </div>
+
                   {journals.map(journal => (
                     <div key={journal.id} className={styles.mycard}>
                       <img id={journal.id} onClick={this.props.listTripEntries} className={styles.mycardimg} src={journal.cover_img}/>
@@ -269,18 +280,6 @@ class Journal extends React.Component {
                         
                       </div>
                       
-                      {/* <div className={styles.mycardfooter + " d-flex justify-content-between"}>  */}
-                        {/* <button 
-                          className={styles.cardEditIcon + " fas fa-edit fa-xs"}
-                          id={journal.id} 
-                          name={journal.journal_name} 
-                          value={journal.cover_img} 
-                          onClick={this.handleEdit}>
-                        </button> */}
-                        
-                        
-                      {/* </div> */}
-
                     </div>
                   ))}
                 </div>
