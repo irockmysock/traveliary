@@ -91,6 +91,7 @@ class App extends React.Component {
 
   clickHandler(event) {
     // console.log(this.state.entries)
+    console.log("CLICKINGGG")
 
     let journalId = parseInt(event.target.id);
     console.log(typeof(journalId))

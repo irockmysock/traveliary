@@ -11,6 +11,7 @@ class Journal extends React.Component {
       isLoaded: false,
       requested : false,
       inEditMode: false,
+      inAddMode: false,
       journals: [],
       journalId: null,
       journalName: null,
@@ -26,8 +27,9 @@ class Journal extends React.Component {
     this.coverImgChangeHandler = this.coverImgChangeHandler.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
-
-    
+    this.activateAddMode = this.activateAddMode.bind(this);
+    this.closeForm = this.closeForm.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
 
   }
 
@@ -51,6 +53,21 @@ class Journal extends React.Component {
           });
         }
       )
+  }
+
+  handleSelect() {
+    console.log("SELECTED A JORUANLLLL");
+    this.setState({journalName: event.target.name})
+  }
+
+  activateAddMode() {
+    console.log("ADD MODE");
+    this.setState({inAddMode:true});
+  }
+
+  closeForm() {
+    this.setState({inAddMode:false});
+    this.setState({inEditMode:false});
   }
 
   nameChangeHandler(event){
@@ -245,10 +262,10 @@ class Journal extends React.Component {
                 <div className={styles.journalCardContainer + " row d-flex flex-wrap justify-content-start overflow-auto"}>
 
                   <div className={styles.mycard}>
-                    <img onClick={this.props.listTripEntries} className={styles.mycardimg} src="https://www.bestfunforall.com/better/imgs/Black%20&%20White%20Butterfly%20wallpaper%20%202.jpg"/>
+                    <img className={styles.mycardimg} src="https://www.bestfunforall.com/better/imgs/Black%20&%20White%20Butterfly%20wallpaper%20%202.jpg"/>
                     <button 
                         className={styles.cardAddIcon + " fas fa-plus-square"}
-                        onClick={this.handleEdit}>
+                        onClick={this.activateAddMode}>
                       </button>
                     <div className={styles.myCardTitleContainer}> 
                       <p className={styles.addNewCardText}>Add New Diary</p>
@@ -257,7 +274,16 @@ class Journal extends React.Component {
 
                   {journals.map(journal => (
                     <div key={journal.id} className={styles.mycard}>
-                      <img id={journal.id} onClick={this.props.listTripEntries} className={styles.mycardimg} src={journal.cover_img}/>
+                      <img 
+                          id={journal.id} 
+                          name={journal.journal_name} 
+                          onClick={(event) => {
+                            this.props.listTripEntries(event);
+                            this.handleSelect(event);
+                          }} 
+                          className={styles.mycardimg} 
+                          src={journal.cover_img}
+                      />
                       
                       <button 
                           className={styles.cardDeleteIcon + " fas fa-times fa-xs"}
@@ -284,10 +310,12 @@ class Journal extends React.Component {
                   ))}
                 </div>
 
-                <div className="mycontainer">
+                {/* <div className={styles.formContainerActive}> */}
                   
                   <Form 
+                    inAddMode={this.state.inAddMode}
                     inEditMode={this.state.inEditMode}
+                    closeForm={this.closeForm}
                     journalName={this.state.journalName}
                     coverImg={this.state.coverImg}
                     nameChangeHandler={this.nameChangeHandler}
@@ -295,7 +323,7 @@ class Journal extends React.Component {
                     submitAdd={this.submitAdd}
                     submitEdit={this.submitEdit}
                     />
-                </div>
+                {/* </div> */}
 
               
 
@@ -313,66 +341,114 @@ class Journal extends React.Component {
 
 
 class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inAddMode: false,
-    }
-    this.activateAddMode = this.activateAddMode.bind(this);
-  };
-
-  activateAddMode() {
-    console.log("ADD MODE");
-    this.setState({inAddMode:true});
-  }
-
 
   render() {
-    if (this.state.inAddMode === true) {
+    if (this.props.inAddMode === true) {
       return (
-        <div classname="container">
-          <div classname="input-group">
-            <div classname="input-group-prepend">
-              <span classname="input-group-text" id="">Diary Name</span>
-            </div>
-            <input type="text" classname="form-control" onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
-          </div>
-          <div classname="input-group justify-content-between">
-            <div classname="input-group-prepend">
-              <span classname="input-group-text" id="">Cover Image</span>
-            </div>
-            <input type="text" classname="form-control" onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
-            UPLOAD
-            <input type="file" onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
-            
-          </div>
 
-          <button className={"btn btn-primary"} onClick={this.props.submitAdd}>Add New Diary</button>
+        <div className={styles.formContainerActive + " row"}>
+          
+          <div className="col-5 pl-0">
+            <input 
+                type="text" 
+                className={styles.formControl} 
+                placeholder="Diary Name"
+                onChange={(event)=>{this.props.nameChangeHandler(event)}}
+            />
+          </div>
+          <div className="col-5 pl-0">
+            <input 
+                type="text" 
+                className={styles.formControl} 
+                placeholder="Cover Image URL"
+                onChange={(event)=>{this.props.coverImgChangeHandler(event)}}
+            /> 
+          </div>
+          {/* UPLOAD
+          <input type="file" onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/> */}
+          
+          <div className="col-1 p-0">
+            <button 
+              className={styles.submitAdd + " fas fa-plus"}
+              onClick={this.props.submitAdd}>
+            </button>
+          </div>
+          <div className="col-1 p-0">
+            <button 
+              className={styles.formCloseIcon + " fas fa-times fa-xs"}
+              onClick={this.props.closeForm}>
+            </button>
+          </div>
+        </div>
+
+        // <div classname="container">
+        //   <div classname="input-group">
+        //     <div classname="input-group-prepend">
+        //       <span classname="input-group-text" id="">Diary Name</span>
+        //     </div>
+        //     <input type="text" classname="form-control" onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
+        //   </div>
+        //   <div classname="input-group justify-content-between">
+        //     <div classname="input-group-prepend">
+        //       <span classname="input-group-text" id="">Cover Image</span>
+        //     </div>
+        //     <input type="text" classname="form-control" onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+        //     UPLOAD
+        //     <input type="file" onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+            
+        //   </div>
+
+          // <button className={"btn btn-primary"} onClick={this.props.submitAdd}>Add New Diary</button>
 
 
           
-        </div>
+        // </div>
       );
       } else if (this.props.inEditMode === true) {
         return (
-          <div classname="container">
-            <div>
-              name:
-              <input value={this.props.journalName} onChange={(event)=>{this.props.nameChangeHandler(event)}}/>
+          <div className={styles.formContainerActive + " row"}>
+            
+            <div className="col-5 pl-0">
+              <input 
+                  type="text" 
+                  className={styles.formControl} 
+                  placeholder="Diary Name"
+                  value={this.props.journalName}
+                  onChange={(event)=>{this.props.nameChangeHandler(event)}}
+              />
             </div>
-            <div>
-              cover:
-              <input value={this.props.coverImg} onChange={(event)=>{this.props.coverImgChangeHandler(event)}}/>
+            <div className="col-5 pl-0">
+              <input 
+                  type="text" 
+                  className={styles.formControl} 
+                  placeholder="Cover Image URL"
+                  value={this.props.coverImg}
+                  onChange={(event)=>{this.props.coverImgChangeHandler(event)}}
+              /> 
             </div>
-
-            <button className={"btn btn-primary"} onClick={this.props.submitEdit}>EDITT Diary</button>
+            <div className="col-1 p-0">
+              <button 
+                  className={styles.submitAdd + " fas fa-plus"}
+                  onClick={this.props.submitEdit}>
+              </button>
+            </div>
+            <div className="col-1 p-0">
+              <button 
+                className={styles.formCloseIcon + " fas fa-times fa-xs"}
+                onClick={this.props.closeForm}>
+              </button>
+            </div>
           </div>
+          
         );
       } else {
         return (
-          <div classname="container">
+          <div className={styles.formContainer + " row"}>
+            <h5>
+              {this.props.journalName}
+            </h5>
             
-            <button className={styles.addButton + " fas fa-plus-square"} onClick={this.activateAddMode}></button>
+            {/* <button className={styles.addButton + " fas fa-plus-square"} onClick={this.props.activateAddMode}></button> */}
             
           </div>
         );

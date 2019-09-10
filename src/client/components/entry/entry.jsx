@@ -23,7 +23,7 @@ class Entry extends React.Component {
                     </Moment>
                     <h5>{result.title}</h5>
                 </div> 
-                <p>{result.entry_content}</p>
+                <p className={styles.entryContentText}>{result.entry_content}</p>
                 <img src={result.media} className={styles.entryImg}/>
             </div>
             )
@@ -49,7 +49,7 @@ class Entry extends React.Component {
                         </Moment>
                         <h5>{result.title}</h5>
                     </div> 
-                    <p>{result.entry_content}</p>
+                    <p className={styles.entryContentText}>{result.entry_content}</p>
                     <img src={result.media} className={styles.entryImg}/>
                 </div>
 
@@ -76,17 +76,17 @@ class Entry extends React.Component {
                         </Moment>
                         <h5>{result.title}</h5>
                     </div> 
-                    <p>{result.entry_content}</p>
+                    <p className={styles.entryContentText}>{result.entry_content}</p>
                     <img src={result.media} className={styles.entryImg}/>
                 </div>
             )
         });
 
         return (
-            <div className={styles.mainContentContainer + " row"}> 
-              <div className={styles.allEntriesContainer}>
+            <div className={styles.mainContentContainer + " row overflow-auto"}> 
+              {/* <div className={styles.allEntriesContainer}> */}
                 {listResults}   
-              </div>
+              {/* </div> */}
             </div>
           
         );

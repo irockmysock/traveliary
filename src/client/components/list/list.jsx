@@ -32,7 +32,7 @@ class List extends React.Component {
             if (this.props.tripEntries.length === 0 && this.props.currentJournal === 0) {
                 return(
                     <div>
-                        <h2>NOOO LISTTT</h2>
+                        <h2>Select Diary</h2>
                     </div>
                 )
             } else if (this.props.tripEntries.length === 0 && this.props.currentJournal !== 0) {
@@ -140,7 +140,6 @@ class List extends React.Component {
                 return(
                     <React.Fragment>
                     <div className={styles.dateEntryHeader + " row m-1"}>
-                        <h5>{this.props.tripEntries[0].entry_location}</h5>
                         <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>    
                     </div>
                     <div className={styles.listContainer}>

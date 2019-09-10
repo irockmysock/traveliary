@@ -1,6 +1,6 @@
 html, body {
   background-color: white;
-  min-width: 700px;
+  min-width: 800px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -13,12 +13,14 @@ body{
   padding-left: 15px;
   padding-right: 15px;
   height: 800px;
+  
 }
 
 .mySidebar{
   background-color:rgba(46,46,46,1);
   color: rgba(245, 245, 245, 0.9);
-  height:800px
+  height:800px;
+  
 }
 
 .sideBarHeader {

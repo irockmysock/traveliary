@@ -105,22 +105,58 @@ h5.card-title {
 }
 
 
-.mycontainer {
+.formContainerActive, .formContainer {
     padding: 2px 5px;
-    height: 20%;
+    margin: 0;
+    height: 10%;
+    width:100%;
+    box-sizing: border-box;
 }
-  
+.formContainerActive {
+    border:2px solid rgba(85, 216, 242, 0.8);
+    border-radius: 2px;
+}
 
+.formControl {
+    width:100%;
+    height:18px;
+    font-size:10px;
+    color:white;
+    background-color: rgba(36, 36, 36, 1);
+    border: none;
+    border-bottom: 1px solid rgb(85, 216, 242);
+}
 
+::placeholder {
+    color: white;
+}
 
+.submitAdd {
+    background-color:rgb(85, 216, 242);
+    color:rgba(36,36,36,1);
+    border: none;
+    border-radius: 50%;
+    font-size: 6px;
+    
+}
 
+.formCloseIcon {
+    background-color:rgba(6, 6, 6, 0.2);
+    color:white;
+    border: 0;
+    border-radius: 50%;
+    font-size: 7px;
+    position: absolute;
+    right: 0;
+}
 
-
-
-
-
-
-.addButton {
+.formCloseIcon:hover {
+    background-color:rgba(6, 6, 6, 0.8);
+    color:red;
+    font-size: 8px;
     border-radius: 50%;
 }
+
+
+
 

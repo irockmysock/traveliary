@@ -2,9 +2,6 @@
     height: 90%;
 }
 
-.allEntriesContainer {
-    border: 1px solid red;
-}
 
 .entryContentContainer {
     border: 1px solid black;
@@ -18,4 +15,8 @@
 .entryDateText{
     color:blue;
     float:right;
+}
+
+.entryContentText {
+    font-size: 12px;
 }
