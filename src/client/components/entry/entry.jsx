@@ -22,7 +22,7 @@ class Entry extends React.Component {
                         {result.entry_date}
                     </Moment>
                     <h3>{result.title}</h3>
-                    <p className={styles.entryLocationText + " m-0"}>{result.entry_location}</p>
+                    <p className={styles.entryLocationText + " m-0"}><i class="fas fa-map-marker-alt"></i> {result.entry_location}</p>
                     
                 </div> 
                 <p className={styles.entryContentText}>{result.entry_content}</p>
@@ -50,7 +50,7 @@ class Entry extends React.Component {
                         {result.entry_date}
                     </Moment>
                     <h3>{result.title}</h3>
-                    <p className={styles.entryLocationText + " m-0"}>{result.entry_location}</p>
+                    <p className={styles.entryLocationText + " m-0"}><i class="fas fa-map-marker-alt"></i> {result.entry_location}</p>
                     
                 </div> 
                 <p className={styles.entryContentText}>{result.entry_content}</p>
@@ -78,7 +78,7 @@ class Entry extends React.Component {
                         {result.entry_date}
                     </Moment>
                     <h3>{result.title}</h3>
-                    <p className={styles.entryLocationText + " m-0"}>{result.entry_location}</p>
+                    <p className={styles.entryLocationText + " m-0"}><i class="fas fa-map-marker-alt"></i> {result.entry_location}</p>
                     
                 </div> 
                 <p className={styles.entryContentText}>{result.entry_content}</p>
