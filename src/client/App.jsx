@@ -46,13 +46,13 @@ class App extends React.Component {
     // this.deleteJournal = this.deleteJournal.bind(this);
   }
   
-  getDate() {
+  // getDate() {
 
-    // let now = moment().format("YYYY-MM-DD");
-    alert (typeof(this.state.entryDate));
-    // var date = new Date();
-    // alert (`${date.getFullYear()}` + "-" + `${date.getMonth()}` + "-" + `${date.getDate()}`);
-  }
+  //   // let now = moment().format("YYYY-MM-DD");
+  //   alert (typeof(this.state.entryDate));
+  //   // var date = new Date();
+  //   // alert (`${date.getFullYear()}` + "-" + `${date.getMonth()}` + "-" + `${date.getDate()}`);
+  // }
 
   componentDidMount() {
     fetch("http://127.0.0.1:3000/entries")
@@ -314,7 +314,7 @@ class App extends React.Component {
         console.log(this.responseText)
         console.log( responseData );
         componentThis.addNewEntry( responseData );
-        alert("WOW NEW ENTRY ADDDEDEDEDEDEDED");
+        console.log("WOW NEW ENTRY ADDED");
     });
         
     request.open("POST", '/entries/new');
