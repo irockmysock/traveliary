@@ -62,7 +62,9 @@ class Journal extends React.Component {
 
   activateAddMode() {
     console.log("ADD MODE");
-    this.setState({inAddMode:true});
+    this.setState(
+      {inAddMode:true,
+      inEditMode:false});
   }
 
   closeForm() {
@@ -82,11 +84,13 @@ class Journal extends React.Component {
 
 
   handleDelete(journalId) {
+    console.log("DELETE HANDLING");
     const journals = this.state.journals.filter(journal => journal.id !== journalId);
     this.setState(
       {journals: journals,
       requested: false,}
     );
+    console.log("DELETE HANDLED")
   };
 
   deleteJournal(event){
@@ -162,6 +166,7 @@ class Journal extends React.Component {
   handleEdit(event) {
     this.setState(
       {inEditMode: true,
+      inAddMode: false,
       journalId: event.target.id,
       journalName: event.target.name,
       coverImg: event.target.value,
@@ -242,7 +247,10 @@ class Journal extends React.Component {
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     request.send(JSON.stringify(data));
 
-    this.setState({requested:true});
+    this.setState({
+      requested:true,
+      inAddMode: false,
+    });
 
   }
 
@@ -255,7 +263,7 @@ class Journal extends React.Component {
     } else if (!this.state.requested) {
         return (
             <div className={styles.journalContainer}>
-              <div className={styles.journalHeader}>
+              <div className={styles.journalHeader + " text-center"}>
                 <h5>MY JOURNALS</h5>
               </div>
             
@@ -280,6 +288,7 @@ class Journal extends React.Component {
                           onClick={(event) => {
                             this.props.listTripEntries(event);
                             this.handleSelect(event);
+                            this.closeForm();
                           }} 
                           className={styles.mycardimg} 
                           src={journal.cover_img}
@@ -301,7 +310,9 @@ class Journal extends React.Component {
                           id={journal.id} 
                           name={journal.journal_name} 
                           value={journal.cover_img} 
-                          onClick={this.handleEdit}>
+                          onClick={(event) => {
+                            this.closeForm; 
+                            this.handleEdit(event)}}>
                         </button>
                         
                       </div>
@@ -343,7 +354,7 @@ class Journal extends React.Component {
 class Form extends React.Component {
 
   render() {
-    if (this.props.inAddMode === true) {
+    if (this.props.inAddMode === true && !this.props.inEditMode) {
       return (
 
         <div className={styles.formContainerActive + " row"}>
@@ -369,7 +380,7 @@ class Form extends React.Component {
           
           <div className="col-1 p-0">
             <button 
-              className={styles.submitAdd + " fas fa-plus"}
+              className={styles.submitAdd + " fas fa-save"}
               onClick={this.props.submitAdd}>
             </button>
           </div>
@@ -404,7 +415,7 @@ class Form extends React.Component {
           
         // </div>
       );
-      } else if (this.props.inEditMode === true) {
+      } else if (this.props.inEditMode === true && !this.props.inAddMode) {
         return (
           <div className={styles.formContainerActive + " row"}>
             
@@ -428,7 +439,7 @@ class Form extends React.Component {
             </div>
             <div className="col-1 p-0">
               <button 
-                  className={styles.submitAdd + " fas fa-plus"}
+                  className={styles.submitAdd + " fas fa-save"}
                   onClick={this.props.submitEdit}>
               </button>
             </div>
@@ -444,9 +455,12 @@ class Form extends React.Component {
       } else {
         return (
           <div className={styles.formContainer + " row"}>
-            <h5>
-              {this.props.journalName}
-            </h5>
+            <div className={styles.journalNameText +" col-12 text-center mt-1"}>
+              <h5>
+                {this.props.journalName}
+              </h5>
+            </div>
+            
             
             {/* <button className={styles.addButton + " fas fa-plus-square"} onClick={this.props.activateAddMode}></button> */}
             

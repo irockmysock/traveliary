@@ -1,7 +1,7 @@
 html, body {
   background-color: white;
   min-width: 800px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Manjari', sans-serif;
 }
 
 body{
@@ -12,14 +12,14 @@ body{
 .appContainer {
   padding-left: 15px;
   padding-right: 15px;
-  height: 800px;
+  height: 100vh;
   
 }
 
 .mySidebar{
   background-color:rgba(46,46,46,1);
   color: rgba(245, 245, 245, 0.9);
-  height:800px;
+  height:100vh;
   
 }
 
@@ -29,14 +29,21 @@ body{
   box-sizing: border-box;
   height: 5%;
   padding:10px;
+  font-family: 'Tillana', cursive; 
+  font-weight: bold;
 }
 
 .mainContentContainer {
-  height: 800px;
+  height: 100vh;
 }
 
 .mainContentHeader {
   background-color:rgba(46,46,46,1); 
   color: rgba(245, 245, 245, 0.9);
   height: 9%;
+  font-family: 'Italianno', cursive;
+}
+
+.mainHeaderText {
+  font-size: 56px;
 }

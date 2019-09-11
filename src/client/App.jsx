@@ -1,19 +1,11 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 var moment = require('moment');
-
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker-cssmodules.css";
-// import Moment from 'react-moment';
-// import 'moment-timezone';
-
 import Journal from './components/journal/journal';
 import Entry from './components/entry/entry';
 import List from './components/list/list';
 
 import styles from './style.scss';
-// import Counter from './components/counter/counter';
-// import Form from './components/form/form';
 
 class App extends React.Component {
   constructor() {
@@ -396,14 +388,15 @@ class App extends React.Component {
     return (
       
       <div className={styles.appContainer}>
-       
+ 
         <div className="row">
            
           <div className={styles.mySidebar + " col-3 mt-0 p-0"}>
             
             <div className={styles.sideBarHeader + " text-center"}>
-              <h3>TRAVELIARY</h3>
+              <h3><i class="fas fa-globe-americas"></i> TRAVELIARY</h3>
             </div>
+            
             
             <Journal 
               listTripEntries={this.clickHandler}
@@ -430,7 +423,7 @@ class App extends React.Component {
           <div className={styles.mainContentContainer + " col-9"}>
             <div className={styles.mainContentHeader + " row"}>
               <div className="col-12 text-center">
-                <h3>My Diary Entries</h3>
+                <h3 className={styles.mainHeaderText}>My Diary Entries</h3>
               </div>
             </div>
             <Entry 
@@ -438,6 +431,7 @@ class App extends React.Component {
                 tripEntries={this.state.tripEntries} 
                 entries={this.state.entries}
             />
+            
           </div>
         </div>
       </div>

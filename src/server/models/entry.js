@@ -4,7 +4,7 @@ module.exports = (dbPoolInstance) => {
   
     let getAllEntries = (callback) => {
   
-      dbPoolInstance.query('SELECT * from entries', (error, queryResult) => {
+      dbPoolInstance.query('SELECT * from entries ORDER BY entry_date', (error, queryResult) => {
         if (error) {
           // invoke callback function with results after query has executed
           callback(error, null);

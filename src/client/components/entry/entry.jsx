@@ -16,12 +16,14 @@ class Entry extends React.Component {
       if (this.props.tripEntries.length === 0) {
         let listResults = this.props.entries.map( (result, id) => {
             return (
-            <div key={id} className="list-group-item px-5">
+            <div key={id} className={styles.entryContentContainer + " list-group-item px-5"} >
                 <div className={styles.entryHeaderText}>
                     <Moment className={styles.entryDateText} format="llll">
                         {result.entry_date}
                     </Moment>
-                    <h5>{result.title}</h5>
+                    <h3>{result.title}</h3>
+                    <p className={styles.entryLocationText + " m-0"}>{result.entry_location}</p>
+                    
                 </div> 
                 <p className={styles.entryContentText}>{result.entry_content}</p>
                 <img src={result.media} className={styles.entryImg}/>
@@ -30,10 +32,10 @@ class Entry extends React.Component {
         });
 
         return (
-            <div className={styles.mainContentContainer + " row"}> 
-              <div className={styles.allEntriesContainer}>
+            <div className={styles.mainContentContainer + " row overflow-auto"}> 
+              {/* <div className={styles.allEntriesContainer}> */}
                 {listResults}   
-              </div>
+              {/* </div> */}
             </div>
           
         );
@@ -42,25 +44,26 @@ class Entry extends React.Component {
         let listResults = this.props.tripEntries.map( (result, id) => {
         
             return (
-                <div key={id} className="list-group-item px-5">
-                    <div className={styles.entryHeaderText}>
-                        <Moment className={styles.entryDateText} format="llll">
-                            {result.entry_date}
-                        </Moment>
-                        <h5>{result.title}</h5>
-                    </div> 
-                    <p className={styles.entryContentText}>{result.entry_content}</p>
-                    <img src={result.media} className={styles.entryImg}/>
-                </div>
-
+                <div key={id} className={styles.entryContentContainer + " list-group-item px-5"}>
+                <div className={styles.entryHeaderText}>
+                    <Moment className={styles.entryDateText} format="llll">
+                        {result.entry_date}
+                    </Moment>
+                    <h3>{result.title}</h3>
+                    <p className={styles.entryLocationText + " m-0"}>{result.entry_location}</p>
+                    
+                </div> 
+                <p className={styles.entryContentText}>{result.entry_content}</p>
+                <img src={result.media} className={styles.entryImg}/>
+            </div>
             )
         });
 
         return (
-            <div className={styles.mainContentContainer + " row"}> 
-              <div className={styles.allEntriesContainer}>
+            <div className={styles.mainContentContainer + " row overflow-auto"}> 
+              {/* <div className={styles.allEntriesContainer}> */}
                 {listResults}   
-              </div>
+              {/* </div> */}
             </div>
 
           
@@ -69,16 +72,18 @@ class Entry extends React.Component {
         let listResults = this.props.dayEntries.map( (result, id) => {
         
             return (
-                <div key={id} className="list-group-item px-5">
-                    <div className={styles.entryHeaderText}>
-                        <Moment className={styles.entryDateText} format="llll">
-                            {result.entry_date}
-                        </Moment>
-                        <h5>{result.title}</h5>
-                    </div> 
-                    <p className={styles.entryContentText}>{result.entry_content}</p>
-                    <img src={result.media} className={styles.entryImg}/>
-                </div>
+                <div key={id} className={styles.entryContentContainer + " list-group-item px-5"} >
+                <div className={styles.entryHeaderText}>
+                    <Moment className={styles.entryDateText} format="llll">
+                        {result.entry_date}
+                    </Moment>
+                    <h3>{result.title}</h3>
+                    <p className={styles.entryLocationText + " m-0"}>{result.entry_location}</p>
+                    
+                </div> 
+                <p className={styles.entryContentText}>{result.entry_content}</p>
+                <img src={result.media} className={styles.entryImg}/>
+            </div>
             )
         });
 

@@ -10,7 +10,7 @@ module.exports = (dbPoolInstance) => {
 
   let getAllJournals = (callback) => {
 
-    dbPoolInstance.query('SELECT * from journals', (error, queryResult) => {
+    dbPoolInstance.query('SELECT * from journals ORDER BY created_date DESC', (error, queryResult) => {
       if (error) {
         // invoke callback function with results after query has executed
         callback(error, null);

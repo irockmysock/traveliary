@@ -3,6 +3,9 @@ import Moment from 'react-moment';
 import 'moment-timezone';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import GoogleApiWrapper from '../../components/map/map';
+
+
 
 // import { GroupBy } from 'react-lodash'
 
@@ -32,62 +35,62 @@ class List extends React.Component {
             if (this.props.tripEntries.length === 0 && this.props.currentJournal === 0) {
                 return(
                     <div>
-                        <h2>Select Diary</h2>
+                        <h5>Select Diary</h5>
                     </div>
                 )
             } else if (this.props.tripEntries.length === 0 && this.props.currentJournal !== 0) {
 
                 if (!this.props.inAddNewEntryMode) {
                     return(
-                        <div>
-                            <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>
-                            {headers}
+                        <div className={styles.listHeader + " row m-0"}>
+                            <button className={styles.newEntryButton + " fas fa-plus"} onClick={this.props.newEntryMode}> Add new entry</button>    
                         </div>
                     )
                 } else {
                     
-                    return(
-                      <React.Fragment>
-                        <div>
-                            title:
-                            <input name="entryTitle" onChange={(event)=>{this.props.logChange(event)}}/>
-                        </div>
-                        <div>
-                            media:
-                            <input name="media" onChange={(event)=>{this.props.logChange(event)}}/>
-                        </div>
-                        <div>
-                            content:
-                            <input name="entryContent" onChange={(event)=>{this.props.logChange(event)}}/>
-                        </div>
-                        <div>
-                            location:
-                            <input name="entryLocation" onChange={(event)=>{this.props.logChange(event)}}/>
-                        </div>
-    
-                        {/* <div>
-                            date:
-                            <input onChange={(event)=>{this.props.entryDateChangeHandler(event)}}/>
-                        </div> */}
-                        Dateeeee:
-                        <DatePicker
-                            selected={this.props.entryDate}
-                            onChange={this.props.entryDateChangeHandler}
-                        />
-                        
-    
-                        <button className={"btn btn-primary"} onClick={this.props.submitEntry}>Add NEW ENTRY</button>
-                      </React.Fragment>
-                        
+                    return( 
+                        //Form for new entry without exisiting entry
+                        <div className={styles.formContainer}>
+                            <div className={styles.wrapper + " row m-0"}>
+                                <GoogleApiWrapper />
+                            </div>
+                            <div className={styles.newFormHeader + "row m-2"}>
+                                <p className="mb-0">New Entry</p>
+                                <button className={styles.entrySaveIcon + " fas fa-save"} onClick={this.props.submitEntry}> Save</button>    
+                            </div>
+                            <div className="row m-2">
+                                <div className="input-group mb-1">
+                                    <input name="entryTitle" placeholder="Title" onChange={(event)=>{this.props.logChange(event)}}/>         
+                                </div>
+                            </div>
+                            <div className="row m-2">
+                                <div className="input-group mb-1">
+                                <DatePicker
+                                    selected={this.props.entryDate}
+                                    onChange={this.props.entryDateChangeHandler}
+                                />
+                                </div>
+                            </div>
+                            <div className="row m-2">
+                                <div className="input-group mb-1">
+                                    <input name="media" placeholder="Photo URL" onChange={(event)=>{this.props.logChange(event)}}/> 
+                                </div>
+                            </div>
+                            <div className="row m-2">
+                                <div className="input-group mb-1">
+                                    <textarea name="entryContent" placeholder="Entry Content" onChange={(event)=>{this.props.logChange(event)}}/>
+                                </div>
+                            </div>
+                            <div className="row m-2">
+                                <div className="input-group mb-1">
+                                    <input name="entryLocation" placeholder="Location" onChange={(event)=>{this.props.logChange(event)}}/> 
+                                </div>
+                            </div>
+                            
+                        </div>    
                     )
                 }
-                // return (
-                //   <React.Fragment>
-                //     <h1> NO LIST </h1>
-                //     <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>
-                //   </React.Fragment>
-                // )
-        
+                
             } else {
                 cats = this.props.tripEntries.reduce((catMemo, { entry_date }) => {
                     (catMemo[entry_date] = catMemo[entry_date] || []);
@@ -139,53 +142,56 @@ class List extends React.Component {
             if (!this.props.inAddNewEntryMode) {
                 return(
                     <React.Fragment>
-                    <div className={styles.dateEntryHeader + " row m-1"}>
-                        <button onClick={this.props.newEntryMode}>ADD NEW ENTRYYYY</button>    
+                    <div className={styles.listHeader + " row m-0"}>
+                        <button className={styles.newEntryButton + " fas fa-plus"} onClick={this.props.newEntryMode}> Add new entry</button>    
                     </div>
-                    <div className={styles.listContainer}>
+                    <div className={styles.listContainer + " overflow-auto"}>
                         {headers}
                     </div>
                     </React.Fragment>
                 )
             } else {
-                
                 return(
-                  <React.Fragment>
-                    <div>
-                        title:
-                        <input name="entryTitle" onChange={(event)=>{this.props.logChange(event)}}/>
+                  //Form for new entry with exisiting entries
+                  <div className={styles.formContainer}>
+                    <div className={styles.wrapper + " row m-0"}>
+                        <GoogleApiWrapper />
                     </div>
-                    <div>
-                        media:
-                        <input name="media" onChange={(event)=>{this.props.logChange(event)}}/>
+                    <div className={styles.newFormHeader + "row m-2"}>
+                        <p className="mb-0">New Entry</p>
+                        <button className={styles.entrySaveIcon + " fas fa-save"} onClick={this.props.submitEntry}> Save</button>    
                     </div>
-                    <div>
-                        content:
-                        <input name="entryContent" onChange={(event)=>{this.props.logChange(event)}}/>
+                    <div className="row m-2">
+                        <div className="input-group mb-1">
+                            <input name="entryTitle" placeholder="Title" onChange={(event)=>{this.props.logChange(event)}}/>         
+                        </div>
                     </div>
-                    <div>
-                        location:
-                        <input name="entryLocation" onChange={(event)=>{this.props.logChange(event)}}/>
+                    <div className="row m-2">
+                        <div className="input-group mb-1">
+                        <DatePicker
+                            selected={this.props.entryDate}
+                            onChange={this.props.entryDateChangeHandler}
+                        />
+                        </div>
                     </div>
-
-                    {/* <div>
-                        date:
-                        <input onChange={(event)=>{this.props.entryDateChangeHandler(event)}}/>
-                    </div> */}
-                    Dateeeee:
-                    <DatePicker
-                        selected={this.props.entryDate}
-                        onChange={this.props.entryDateChangeHandler}
-                    />
-                    
-
-                    <button className={"btn btn-primary"} onClick={this.props.submitEntry}>Add NEW ENTRY</button>
-                  </React.Fragment>
-                    
+                    <div className="row m-2">
+                        <div className="input-group mb-1">
+                            <input name="media" placeholder="Photo URL" onChange={(event)=>{this.props.logChange(event)}}/> 
+                        </div>
+                    </div>
+                    <div className="row m-2">
+                        <div className="input-group mb-1">
+                            <textarea name="entryContent" placeholder="Entry Content" onChange={(event)=>{this.props.logChange(event)}}/>
+                        </div>
+                    </div>
+                    <div className="row m-2">
+                        <div className="input-group mb-1">
+                            <input name="entryLocation" placeholder="Location" onChange={(event)=>{this.props.logChange(event)}}/> 
+                        </div>
+                    </div>
+                  </div>   
                 )
             }
-
-      
     }
 }
 
@@ -194,6 +200,11 @@ class List extends React.Component {
 // };
 
 export default List;
+
+
+
+
+
 
 
 

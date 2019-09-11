@@ -21,7 +21,7 @@ module.exports = (db) => {
 
         db.entry.addNewEntry(request.body,(error, result) => {
           // TODO add conditionals that check for errors
-          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+          console.log('~~~~~~~~ADDING~~~~~~~~~');
           console.log(result)
           response.send(result[0]);
         });
@@ -32,7 +32,7 @@ module.exports = (db) => {
 
         db.entry.deleteAllJournalEntries(request.body,(error, result) => {
           // TODO add conditionals that check for errors
-          console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+          console.log('~~~~~~~~DELETING ALL JOURNAL ENTRIES~~~~~~~~~~');
           console.log(result)
           response.send(result);
         });
