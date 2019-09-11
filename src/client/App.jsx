@@ -41,7 +41,7 @@ class App extends React.Component {
     // this.entryContentChangeHandler = this.entryContentChangeHandler.bind(this);
     // this.entryLocationChangeHandler = this.entryLocationChangeHandler.bind(this);
     this.entryDateChangeHandler = this.entryDateChangeHandler.bind(this);
-    this.getDate = this.getDate.bind(this);
+    // this.getDate = this.getDate.bind(this);
     this.logChange = this.logChange.bind(this);
     // this.deleteJournal = this.deleteJournal.bind(this);
   }
