@@ -34,7 +34,9 @@ class Journal extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:3000/journals")
+    let hosturl = window.location.origin;
+    let url = hosturl + "/journals"
+    fetch(url)
       .then(res => res.json())
       .then(
         (result) => {
