@@ -189,15 +189,15 @@ class Journal extends React.Component {
 
     var request = new XMLHttpRequest();
 
-    // var componentThis = this;
+    var componentThis = this;
 
     request.addEventListener("load", function() {
         console.log("DONE");
         const responseData = JSON.parse( this.responseText );
         console.log(this.responseText)
         console.log( responseData );
-        // componentThis.handleEdit( responseData );
-        alert("WOW DONE WITYH EDITTINGGN THING");
+        componentThis.handleEdit( responseData );
+        console.log("WOW DONE WITYH EDITTINGGN THING");
     });
         
     request.open("PUT", '/journals/edit');

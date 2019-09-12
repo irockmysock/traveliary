@@ -55,7 +55,9 @@ class App extends React.Component {
   // }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:3000/entries")
+    let hosturl = window.location.origin;
+    let url = hosturl + "/entries"
+    fetch(url)
       .then(res => res.json())
       .then(
         (result) => {
