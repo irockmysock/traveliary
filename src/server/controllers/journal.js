@@ -79,7 +79,7 @@ module.exports = (db) => {
     db.journal.editJournal(request.body,(error, result) => {
       console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
       console.log(result)
-      response.send(result[0]);
+      response.send(result);
     });
   };
 
