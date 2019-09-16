@@ -59,12 +59,6 @@ module.exports = (dbPoolInstance) => {
         });
       };
     
-
-
-
-  
-
-  
     return { 
         getAllEntries,
         addNewEntry,

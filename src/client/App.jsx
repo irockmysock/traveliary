@@ -55,6 +55,7 @@ class App extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
     this.activateAddMode = this.activateAddMode.bind(this);
+    this.activateEditMode = this.activateEditMode.bind(this);
     this.closeForm = this.closeForm.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
 
@@ -371,7 +372,7 @@ class App extends React.Component {
     // this.setState({requested:true});
   }
 
-  handleEdit(event) {
+  activateEditMode(event) {
     this.setState(
       {inEditMode: true,
       inAddMode: false,
@@ -381,8 +382,19 @@ class App extends React.Component {
       requested: false
       }
     );
-    console.log("CLICKEDD")
+    console.log("entering edit mode!")
   };
+
+  handleEdit(editedJournal) {
+    console.log("HANDLING EDIT");
+    console.log( editedJournal );
+    const index = this.state.journals.findIndex(journal => journal.id === editedJournal[0].id),
+    journals = [...this.state.journals];
+    journals[index] = editedJournal[0];
+    this.setState({journals, requested: false, inEditMode: false});
+
+    
+  }
 
   submitEdit() {
     console.log("EDITTT", this.state);
@@ -491,6 +503,7 @@ class App extends React.Component {
               journalName={this.state.journalName}
               coverImg={this.state.coverImg}
               activateAddMode={this.activateAddMode}
+              activateEditMode={this.activateEditMode}
               nameChangeHandler={this.nameChangeHandler}
               coverImgChangeHandler={this.coverImgChangeHandler}
               handleSelect={this.handleSelect}

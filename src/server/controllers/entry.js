@@ -11,41 +11,35 @@ module.exports = (db) => {
           response.send('server error');
         } else {
           response.send({entries: entries});
-          console.log(entries)
+        //   console.log(entries)
         }
       });
     };
 
     let addNewEntry = (request, response) => {
-        console.log(request.body);
+        // console.log(request.body);
 
         db.entry.addNewEntry(request.body,(error, result) => {
-          // TODO add conditionals that check for errors
-          console.log('~~~~~~~~ADDING~~~~~~~~~');
-          console.log(result)
+        //   console.log('~~~~~~~~ADDING~~~~~~~~~');
+        //   console.log(result)
           response.send(result[0]);
         });
     };
 
     let deleteAllJournalEntries = (request, response) => {
-        console.log(request.body);
-
+        // console.log(request.body);
         db.entry.deleteAllJournalEntries(request.body,(error, result) => {
           // TODO add conditionals that check for errors
-          console.log('~~~~~~~~DELETING ALL JOURNAL ENTRIES~~~~~~~~~~');
-          console.log(result)
+        //   console.log('~~~~~~~~DELETING ALL JOURNAL ENTRIES~~~~~~~~~~');
+        //   console.log(result)
           response.send(result);
         });
     };
 
-    
-
-    
-  
     return {
-    getAll,
-    addNewEntry,
-    deleteAllJournalEntries,
+        getAll,
+        addNewEntry,
+        deleteAllJournalEntries,
     }
 
   };

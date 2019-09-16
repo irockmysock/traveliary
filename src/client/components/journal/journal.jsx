@@ -100,7 +100,7 @@ class Journal extends React.Component {
                           value={journal.cover_img} 
                           onClick={(event) => {
                             this.props.closeForm; 
-                            this.props.handleEdit(event)}}>
+                            this.props.activateEditMode(event)}}>
                         </button>
                         
                       </div>
