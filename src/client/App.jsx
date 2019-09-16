@@ -1,6 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 var moment = require('moment');
+
 import Journal from './components/journal/journal';
 import Entry from './components/entry/entry';
 import List from './components/list/list';
@@ -26,33 +27,39 @@ class App extends React.Component {
       entryLocation: null,
       entryDate: new Date(),
       userId: 1,
-      // journals: [],
+      //for journals
+      inEditMode: false,
+      inAddMode: false,
+      journals: [],
+      journalId: null,
+      journalName: null,
+      coverImg: null,
+      createdDate: moment(),
+      updatedDate: moment(),
+
     };
-    // this.listTripEntries = this.listTripEntries.bind(this);
+
     this.clickHandler = this.clickHandler.bind(this);
-    // this.updateCurrentJournal = this.updateCurrentJournal.bind(this);
     this.newEntryMode = this.newEntryMode.bind(this);
     this.addNewEntry = this.addNewEntry.bind(this);
     this.submitEntry = this.submitEntry.bind(this);
     this.showDateEntries = this.showDateEntries.bind(this);
-
-    // this.entryTitleChangeHandler = this.entryTitleChangeHandler.bind(this);
-    // this.mediaChangeHandler = this.mediaChangeHandler.bind(this);
-    // this.entryContentChangeHandler = this.entryContentChangeHandler.bind(this);
-    // this.entryLocationChangeHandler = this.entryLocationChangeHandler.bind(this);
     this.entryDateChangeHandler = this.entryDateChangeHandler.bind(this);
-    // this.getDate = this.getDate.bind(this);
     this.logChange = this.logChange.bind(this);
-    // this.deleteJournal = this.deleteJournal.bind(this);
+    //journal components
+    this.submitAdd = this.submitAdd.bind(this);
+    this.deleteJournal = this.deleteJournal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.nameChangeHandler = this.nameChangeHandler.bind(this);
+    this.coverImgChangeHandler = this.coverImgChangeHandler.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.submitEdit = this.submitEdit.bind(this);
+    this.activateAddMode = this.activateAddMode.bind(this);
+    this.closeForm = this.closeForm.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+
   }
   
-  // getDate() {
-
-  //   // let now = moment().format("YYYY-MM-DD");
-  //   alert (typeof(this.state.entryDate));
-  //   // var date = new Date();
-  //   // alert (`${date.getFullYear()}` + "-" + `${date.getMonth()}` + "-" + `${date.getDate()}`);
-  // }
 
   componentDidMount() {
     let hosturl = window.location.origin;
@@ -74,13 +81,32 @@ class App extends React.Component {
             isLoaded: true,
             error
           });
-          console.log("ERRORRRRRRRR")
+          console.log("load entries error")
         }
       )
-      // .then(()=>{
-      //   console.log("entries array isss");
-      //   console.log(this.state.entries);
-      // })
+      .then(console.log("HEREEEEEEEEE"))
+    
+    fetch(hosturl + "/journals")
+      .then(res => res.json())
+      .then(
+        (result2) => {
+          this.setState({
+            isLoaded: true,
+            journals: result2.journals
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+          console.log("LOAD journals error")
+        }
+      )
+      
   }
 
   clickHandler(event) {
@@ -157,14 +183,6 @@ class App extends React.Component {
     });
   }
 
-  // updateCurrentJournal() {
-  //   if (this.state.tripEntries.length == 0) {
-  //     this.setState({currentJournal: this.state.tripEntries[0].journal_id});
-  //   } else {
-  //     this.setState({currentJournal})
-  //   }
-  // }
-
   newEntryMode() {
     this.setState({inAddNewEntryMode: true});
   }
@@ -206,82 +224,10 @@ class App extends React.Component {
     });
   }
 
-  // handleDelete(journal) {
-  //   const journals = this.state.journals.filter(item => item.id !== itemId);
-  //   this.setState({ journals: journals });
-  // };
-
-  // deleteJournal(event){
-  //   console.log("WORKKSS" + event.target.id)
-  //   var data = {
-  //       id: event.target.id
-  //   }
-  //   // fetch("/journals/delete", {
-  //   //     method: 'POST',
-  //   //     headers: {'Content-Type': 'application/json'},
-  //   //     body: JSON.stringify(data)
-  //   // }).then(function(response) {
-  //   //     if (response.status >= 400) {
-  //   //       throw new Error("Bad response from server");
-  //   //     }
-  //   //     return response.json();
-  //   // }).then(function(data) {
-  //   //     if(data === "success"){
-  //   //        alert("JOURNAL DELETEDD");  
-  //   //     }
-  //   // }).catch(function(err) {
-  //   //     console.log(err)
-  //   // });
-
-  //   var request = new XMLHttpRequest();
-
-  //   var componentThis = this;
-
-  //   request.addEventListener("load", function() {
-  //       console.log("DONE");
-  //       const responseData = JSON.parse( this.responseText );
-  //       console.log(this.responseText)
-  //       console.log( responseData );
-  //       // componentThis.addNewEntry( responseData );
-  //       // alert("WOW NEW ENTRY ADDDEDEDEDEDEDED");
-  //   });
-        
-  //   request.open("POST", '/journals/delete');
-  //   request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  //   request.send(JSON.stringify(data));
-
-  //   this.setState({requested:true});
-    
-    
-  // }
-
-
   logChange(e) {
     console.log(e.target.value)
     this.setState({[e.target.name]: e.target.value});  
   }
-
-
-  // entryTitleChangeHandler(event){
-  //   console.log("$$$$$$ "+event.target.value);
-  //   this.setState({entryTitle: event.target.value});
-  //   console.log("entry title stateee "+ this.state.entryTitle);
-  // }
-
-  // mediaChangeHandler(event){
-  //     console.log("$$$$$$ "+event.target.value);
-  //     this.setState({media: event.target.value});
-  // }
-
-  // entryContentChangeHandler(event){
-  //     console.log("$$$$$$ "+event.target.value);
-  //     this.setState({entryContent: event.target.value});
-  // }
-
-  // entryLocationChangeHandler(event){
-  //     console.log("$$$$$$ "+event.target.value);
-  //     this.setState({entryLocation: event.target.value});
-  // }
 
   entryDateChangeHandler(date){
       // let formattedDate = moment(date).format("DD-MM-YYYY")
@@ -291,7 +237,6 @@ class App extends React.Component {
       this.setState({entryDate: date});
       console.log("DATTEEEEE "+ date);
   }
-
 
   submitEntry() {
     console.log("WIOW SUBMITENTRYYY", this.state);
@@ -325,57 +270,195 @@ class App extends React.Component {
 
     this.setState({requested:true});
     
-  }    
-
-  // showWidget(widget) {
-  //   widget.open();
-  //   // console.log("YEA")
-  // }
-
-  // fileChangeHandler(event) {
-  //   console.log(event);
-  // }
-
-  // Upload() {
-  //   const [image, setImage] = useState('')
-  //   const [loading, setLoading] = useState(false)
+  }
   
-  //   const uploadImage = async e => {
-  //     const files = e.target.files
-  //     const data = new FormData()
-  //     data.append('file', files[0])
-  //     data.append('upload_preset', 'cphn5mq5')
-  //     setLoading(true)
-  //     const res = await fetch(
-  //       '	https://api.cloudinary.com/v1_1/irockmysock',
-  //       {
-  //         method: 'POST',
-  //         body: data
-  //       }
-  //     )
-  //     const file = await res.json()
+  //for journals
+
+  handleSelect() {
+    console.log("SELECTED A JORUANLLLL");
+    this.setState({journalName: event.target.name})
+  }
+
+  activateAddMode() {
+    console.log("ADD MODE");
+    this.setState(
+      {inAddMode:true,
+      inEditMode:false,
+      journalName: "",
+      coverImg: ""});
+  }
+
+  closeForm() {
+    this.setState({inAddMode:false});
+    this.setState({inEditMode:false});
+  }
+
+  nameChangeHandler(event){
+    console.log("$$$$$$ "+event.target.value);
+    this.setState({journalName: event.target.value});
+  }
+
+  coverImgChangeHandler(event){
+    console.log("******** "+event.target.value);
+    this.setState({coverImg: event.target.value});
+  }
+
+
+  handleDelete(journalId) {
+    console.log("DELETE HANDLING");
+    const journals = this.state.journals.filter(journal => journal.id !== journalId);
+    this.setState(
+      {journals: journals,
+      requested: false,}
+    );
+    console.log("DELETE HANDLED")
+  };
+
+  deleteJournal(event){
+    console.log("WORKKSS" + event.target.id)
+    console.log(typeof(event.target.id));
+    var data = { 
+      "journal_id": event.target.id
+    };
+
+    var request = new XMLHttpRequest();
+
+    var componentThis = this;
+
+    request.addEventListener("load", function() {
+        console.log("DONE");
+        const responseData = JSON.parse( this.responseText );
+        console.log(this.responseText)
+        console.log( responseData );
+        componentThis.handleDelete( responseData );
+        // alert("Journal Deleted");
+        console.log("Journal Deleted")
+    });
+        
+    request.open("DELETE", '/journals/delete');
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
+
+    this.setState({requested:true});
+  }
+
+  deleteAllJournalEntries(event) {
+    var data = { 
+      "journal_id": event.target.id
+    };
+    console.log("DELETEING ALL ENTRIES IN JOURNAL " + event.target.id)
+    var request = new XMLHttpRequest();
+
+    var componentThis = this;
+
+    request.addEventListener("load", function() {
+        console.log("DONE");
+        const responseData = JSON.parse( this.responseText );
+        console.log(this.responseText)
+        console.log( responseData );
+        componentThis.handleDelete( responseData.id );
+        console.log("JOURNAL ENTRIES DELETETETETD");
+    });
+        
+    request.open("DELETE", '/journalentries/delete');
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
+
+    this.setState({requested:true});
+  }
+
+  handleEdit(event) {
+    this.setState(
+      {inEditMode: true,
+      inAddMode: false,
+      journalId: event.target.id,
+      journalName: event.target.name,
+      coverImg: event.target.value,
+      requested: false
+      }
+    );
+    console.log("CLICKEDD")
+  };
+
+  submitEdit() {
+    console.log("EDITTT", this.state);
+
+    var data = { 
+        "journal_name": this.state.journalName,
+        "cover_img": this.state.coverImg,
+        "user_id": this.state.userId,
+        "id": this.state.journalId,
+        "updated_date": this.state.updatedDate,
+    };
+
+    var request = new XMLHttpRequest();
+
+    var componentThis = this;
+
+    request.addEventListener("load", function() {
+        console.log("DONE");
+        const responseData = JSON.parse( this.responseText );
+        console.log(this.responseText)
+        console.log( responseData );
+        componentThis.handleEdit( responseData );
+        console.log("WOW DONE WITYH EDITTINGGN THING");
+    });
+        
+    request.open("PUT", '/journals/edit');
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
+
+    this.setState({requested:true});
+
+    }
   
-  //     setImage(file.secure_url)
-  //     setLoading(false)
-  //   }
-  
-  //   return (
-  //     <div className="App">
-  //       <h1>Upload Image</h1>
-  //       <input
-  //         type="file"
-  //         name="file"
-  //         placeholder="Upload an image"
-  //         onChange={uploadImage}
-  //       />
-  //       {loading ? (
-  //         <h3>Loading...</h3>
-  //       ) : (
-  //         <img src={image} style={{ width: '300px' }} />
-  //       )}
-  //     </div>
-  //   )
-  // }
+
+  handleAdd(journal) {
+    console.log("HANDLING ADDDD");
+    console.log( journal );
+    this.setState(
+        {journals:[journal,...this.state.journals], 
+        requested: false}
+    )
+  }
+
+
+  submitAdd(){
+    console.log("WIOW SUBMIT", this.state);
+
+    var data = { 
+        "journal_name": this.state.journalName,
+        "cover_img": this.state.coverImg,
+        "user_id": this.state.userId,
+        "created_date": this.state.createdDate
+    };
+
+    var request = new XMLHttpRequest();
+
+    var componentThis = this;
+
+    request.addEventListener("load", function(event) {
+        console.log("DONE");
+        const responseData = JSON.parse( this.responseText );
+        console.log(this.responseText)
+        console.log( responseData );
+        componentThis.handleAdd( responseData );
+        event.preventDefault()
+        console.log("New journal created!!!");
+    });
+        
+    request.open("POST", '/journals/new');
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
+
+    this.setState({
+      requested:true,
+      inAddMode: false,
+    });
+
+  }
+
+
 
   render() {
     // let widget = window.cloudinary.createUploadWidget({
@@ -402,7 +485,26 @@ class App extends React.Component {
             
             <Journal 
               listTripEntries={this.clickHandler}
-              // deleteJournal={this.deleteJournal}
+              error={this.state.error}
+              isLoaded={this.state.isLoaded}
+              requested={this.state.requested}
+              activateAddMode={this.activateAddMode}
+              inAddMode={this.state.inAddMode}
+              inEditMode={this.state.inEditMode}
+              journals={this.state.journals}
+              journalName={this.state.journalName}
+              coverImg={this.state.coverImg}
+              activateAddMode={this.activateAddMode}
+              nameChangeHandler={this.nameChangeHandler}
+              coverImgChangeHandler={this.coverImgChangeHandler}
+              handleSelect={this.handleSelect}
+              closeForm={this.closeForm}
+              deleteJournal={this.deleteJournal}
+              deleteAllJournalEntries={this.deleteAllJournalEntries}
+              handleEdit={this.handleEdit}
+              submitEdit={this.submitEdit}
+              handleAdd={this.handleAdd}
+              submitAdd={this.submitAdd}
             />
       
             <List 
@@ -411,10 +513,6 @@ class App extends React.Component {
               newEntryMode={this.newEntryMode}
               addNewEntry={this.addNewEntry}
               inAddNewEntryMode={this.state.inAddNewEntryMode}
-              // entryTitleChangeHandler={this.entryTitleChangeHandler}
-              // mediaChangeHandler={this.mediaChangeHandler}
-              // entryContentChangeHandler={this.entryContentChangeHandler}
-              // entryLocationChangeHandler={this.entryLocationChangeHandler}
               logChange={this.logChange}
               entryDateChangeHandler={this.entryDateChangeHandler}
               submitEntry={this.submitEntry}
@@ -443,9 +541,3 @@ class App extends React.Component {
 
 export default hot(module)(App);
 
-
-
-
-{/* <button className={styles.test} onClick={this.showWidget}>WIDGET</button>
-            UPLOADDDD
-            <input type="file" onChange={this.fileChangeHandler}/> */}
