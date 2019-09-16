@@ -422,6 +422,7 @@ class App extends React.Component {
     console.log( journal );
     this.setState(
         {journals:[journal,...this.state.journals], 
+        currentJournal: journal.id,
         requested: false}
     )
   }
