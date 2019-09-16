@@ -307,8 +307,13 @@ class App extends React.Component {
   handleDelete(journalId) {
     console.log("DELETE HANDLING");
     const journals = this.state.journals.filter(journal => journal.id !== journalId);
+    const entries = this.state.entries.filter(entry => entry.journal_id !== journalId);
     this.setState(
       {journals: journals,
+      entries: entries,
+      tripEntries: [],
+      journalName: "",
+      currentJournal: 0,
       requested: false,}
     );
     console.log("DELETE HANDLED")
@@ -331,7 +336,6 @@ class App extends React.Component {
         console.log(this.responseText)
         console.log( responseData );
         componentThis.handleDelete( responseData );
-        // alert("Journal Deleted");
         console.log("Journal Deleted")
     });
         
@@ -356,7 +360,7 @@ class App extends React.Component {
         const responseData = JSON.parse( this.responseText );
         console.log(this.responseText)
         console.log( responseData );
-        componentThis.handleDelete( responseData.id );
+        // componentThis.handleDelete( responseData.id );
         console.log("JOURNAL ENTRIES DELETETETETD");
     });
         
@@ -364,7 +368,7 @@ class App extends React.Component {
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     request.send(JSON.stringify(data));
 
-    this.setState({requested:true});
+    // this.setState({requested:true});
   }
 
   handleEdit(event) {
@@ -461,15 +465,6 @@ class App extends React.Component {
 
 
   render() {
-    // let widget = window.cloudinary.createUploadWidget({
-    //   cloudName: 'irockmysock', 
-    //   uploadPreset: 'cphn5mq5'}, (error, result) => { 
-    //     if (!error && result && result.event === "success") { 
-    //       console.log('Done! Here is the image info: ', result.info); 
-    //     }
-    //   }
-    // )
-
     return (
       
       <div className={styles.appContainer}>
