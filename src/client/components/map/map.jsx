@@ -1,14 +1,9 @@
 import React from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
-import styles from './style.scss';
+// import styles from './style.scss';
+import PropTypes from 'prop-types';
 
-const mapStyles = {
-  zIndex: '1',
-  width: '90%',
-  height: '20%',
-  // display: 'block',
-  // position: 'fixed !important',
-};
+
 
 export class MapContainer extends React.Component {
   
@@ -23,6 +18,10 @@ export class MapContainer extends React.Component {
         />
     );
   }
+}
+
+MapContainer.propTypes = {
+  google: PropTypes.object,
 }
 
 export default GoogleApiWrapper({

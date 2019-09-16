@@ -5,33 +5,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import GoogleApiWrapper from '../../components/map/map';
 
-
-
-// import { GroupBy } from 'react-lodash'
-
 import PropTypes from 'prop-types';
 
 import styles from './style.scss';
-import main_styles from '../../style.scss';
 
 class List extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          error: null,
-          isLoaded: false,
-          requested : false
-
-        };
-        // this.handleChange = this.handleChange.bind(this);
     
-    }
-
     render() {
-        //   return (
-        //       <div>LISTTTT</div>
-        //   )
-            let cats = {};
+            let dateHeaders = {};
+
             if (this.props.tripEntries.length === 0 && this.props.currentJournal === 0) {
                 return(
                     <div>
@@ -92,18 +74,18 @@ class List extends React.Component {
                 }
                 
             } else {
-                cats = this.props.tripEntries.reduce((catMemo, { entry_date }) => {
-                    (catMemo[entry_date] = catMemo[entry_date] || []);
-                    return catMemo;
+                dateHeaders = this.props.tripEntries.reduce((date, { entry_date }) => {
+                    (date[entry_date] = date[entry_date] || []);
+                    return date;
                 }, {});
-                console.log(cats);
+                // console.log(dateHeaders);
             }
-            console.log("catsssss", Object.keys(cats))
-            let headers = Object.keys(cats).map((key, index) => {
-                let entries = this.props.tripEntries.map((entry, index) => {
+            // console.log("dateHeadersssss", Object.keys(dateHeaders))
+            let headers = Object.keys(dateHeaders).map((key, index) => {
+                let entries = this.props.tripEntries.map((entry) => {
                     if (entry.entry_date === key){
                         return (
-                            <div className={styles.listEntry + " row m-0"}>
+                            <div key={entry.id} className={styles.listEntry + " row m-0"}>
                                 <div className={styles.listImgContainer + " col-3 p-0"}>
                                     <img className={styles.listImage} src={entry.media}/>
                                 </div>
@@ -195,9 +177,18 @@ class List extends React.Component {
     }
 }
 
-// Entry.propTypes = {
-//   message: PropTypes.string.isRequired,
-// };
+List.propTypes = {
+    currentJournal: PropTypes.number,
+    tripEntries: PropTypes.array,
+    newEntryMode: PropTypes.func,
+    addNewEntry: PropTypes.func,
+    inAddNewEntryMode: PropTypes.bool,
+    logChange: PropTypes.func,
+    entryDateChangeHandler: PropTypes.func,
+    submitEntry: PropTypes.func,
+    showDateEntries: PropTypes.func,
+    entryDate: PropTypes.object,
+};
 
 export default List;
 

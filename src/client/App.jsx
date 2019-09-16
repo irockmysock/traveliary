@@ -38,7 +38,7 @@ class App extends React.Component {
       updatedDate: moment(),
 
     };
-
+    //entry functions
     this.clickHandler = this.clickHandler.bind(this);
     this.newEntryMode = this.newEntryMode.bind(this);
     this.addNewEntry = this.addNewEntry.bind(this);
@@ -46,7 +46,7 @@ class App extends React.Component {
     this.showDateEntries = this.showDateEntries.bind(this);
     this.entryDateChangeHandler = this.entryDateChangeHandler.bind(this);
     this.logChange = this.logChange.bind(this);
-    //journal components
+    //journal functions
     this.submitAdd = this.submitAdd.bind(this);
     this.deleteJournal = this.deleteJournal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -82,10 +82,9 @@ class App extends React.Component {
             isLoaded: true,
             error
           });
-          console.log("load entries error")
+          // console.log("load entries error")
         }
       )
-      .then(console.log("HEREEEEEEEEE"))
     
     fetch(hosturl + "/journals")
       .then(res => res.json())
@@ -104,7 +103,7 @@ class App extends React.Component {
             isLoaded: true,
             error
           });
-          console.log("LOAD journals error")
+          // console.log("LOAD journals error")
         }
       )
       
@@ -112,10 +111,10 @@ class App extends React.Component {
 
   clickHandler(event) {
     // console.log(this.state.entries)
-    console.log("CLICKINGGG")
+    // console.log("CLICKINGGG")
 
     let journalId = parseInt(event.target.id);
-    console.log(typeof(journalId))
+    // console.log(typeof(journalId))
     
     let allEntries = this.state.entries;
     let tripEntries = [];
@@ -135,7 +134,7 @@ class App extends React.Component {
           currentJournal: journalId,
           inAddNewEntryMode: false}
         )
-        console.log("NO MATCHHHHH")
+        // console.log("NO MATCHHHHH")
       }
     });
   }
@@ -146,12 +145,12 @@ class App extends React.Component {
 
     let date = event.target.id;
     let formattedDate = moment(date).format("YYYY-MM-DD")
-    console.log("FORMATEDDD DATE OF EVENT TARGET " + typeof(formattedDate))
-    console.log(formattedDate)
+    // console.log("FORMATEDDD DATE OF EVENT TARGET " + typeof(formattedDate))
+    // console.log(formattedDate)
     
     let tripEntries = this.state.tripEntries;
-    console.log("TRIP ENTRIESS IS");
-    console.log(tripEntries);
+    // console.log("TRIP ENTRIESS IS");
+    // console.log(tripEntries);
 
     let dayEntries = [];
     
@@ -161,25 +160,23 @@ class App extends React.Component {
       // console.log(moment(entry.entry_date).format("YYYY-MM-DD"))
 
       let entryDate = moment(entry.entry_date).format("YYYY-MM-DD");
-      console.log("ENTRY DATEE ISSSSS")
-      console.log(entryDate);
+      // console.log("ENTRY DATEE ISSSSS")
+      // console.log(entryDate);
 
       if ( entryDate == formattedDate) {
-        console.log(entry)
+        // console.log(entry)
         dayEntries.push(entry);
-        console.log("DAY ENTRIESSS ARRAY");
-        console.log(dayEntries);
+        // console.log("DAY ENTRIESSS ARRAY");
+        // console.log(dayEntries);
         this.setState(
-          {dayEntries: dayEntries}, () => {
-            console.log(this.state.dayEntries)
-          }
+          {dayEntries: dayEntries}
         )
-        console.log("MATTTCCH!!!");
+        // console.log("MATTTCCH!!!");
         // console.log("NEW TRIP ENTRIES ISSS");
         // console.log(this.state.tripEntries)
         
       } else {
-        console.log("NO MATCHHHHH")
+        // console.log("NO MATCHHHHH")
       }
     });
   }
@@ -189,8 +186,8 @@ class App extends React.Component {
   }
 
   addNewEntry(entry) {
-    console.log("ENTRYRYRYRYRRYRYRYRRYRYRRY");
-    console.log( entry );
+    // console.log("ENTRYRYRYRYRRYRYRYRRYRYRRY");
+    // console.log( entry );
     let updatedEntries = [entry, ...this.state.entries];
     let journalId = this.state.currentJournal;
     
@@ -199,13 +196,13 @@ class App extends React.Component {
       {entries: updatedEntries,
       requested: false,
       inAddNewEntryMode: false}, () => {
-        console.log("ENTRIES UPDATED")
+        // console.log("ENTRIES UPDATED")
       }
     )
     let allEntries = this.state.entries;
 
     allEntries.map(entry => {
-      console.log("MAPPPINNGGGG")
+      // console.log("MAPPPINNGGGG")
       if (entry.journal_id == journalId) {
         tripEntries.push(entry);
         this.setState(
@@ -220,13 +217,13 @@ class App extends React.Component {
           currentJournal: journalId,
           inAddNewEntryMode: false}
         )
-        console.log("NO MATCHHHHH")
+        // console.log("NO MATCHHHHH")
       }
     });
   }
 
   logChange(e) {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     this.setState({[e.target.name]: e.target.value});  
   }
 
@@ -236,11 +233,11 @@ class App extends React.Component {
       // console.log("DATEEEEEE" + formattedDate)
       // console.log("TYPE ISS " + typeof(formattedDate))
       this.setState({entryDate: date});
-      console.log("DATTEEEEE "+ date);
+      // console.log("DATTEEEEE "+ date);
   }
 
   submitEntry() {
-    console.log("WIOW SUBMITENTRYYY", this.state);
+    // console.log("WIOW SUBMITENTRYYY", this.state);
 
     var data = { 
         "title": this.state.entryTitle,
@@ -257,12 +254,12 @@ class App extends React.Component {
     var componentThis = this;
 
     request.addEventListener("load", function() {
-        console.log("DONE");
+        // console.log("DONE");
         const responseData = JSON.parse( this.responseText );
-        console.log(this.responseText)
-        console.log( responseData );
+        // console.log(this.responseText)
+        // console.log( responseData );
         componentThis.addNewEntry( responseData );
-        console.log("WOW NEW ENTRY ADDED");
+        // console.log("WOW NEW ENTRY ADDED");
     });
         
     request.open("POST", '/entries/new');
@@ -276,12 +273,12 @@ class App extends React.Component {
   //for journals
 
   handleSelect() {
-    console.log("SELECTED A JORUANLLLL");
+    // console.log("SELECTED A JORUANLLLL");
     this.setState({journalName: event.target.name})
   }
 
   activateAddMode() {
-    console.log("ADD MODE");
+    // console.log("ADD MODE");
     this.setState(
       {inAddMode:true,
       inEditMode:false,
@@ -295,18 +292,18 @@ class App extends React.Component {
   }
 
   nameChangeHandler(event){
-    console.log("$$$$$$ "+event.target.value);
+    // console.log("$$$$$$ "+event.target.value);
     this.setState({journalName: event.target.value});
   }
 
   coverImgChangeHandler(event){
-    console.log("******** "+event.target.value);
+    // console.log("******** "+event.target.value);
     this.setState({coverImg: event.target.value});
   }
 
 
   handleDelete(journalId) {
-    console.log("DELETE HANDLING");
+    // console.log("DELETE HANDLING");
     const journals = this.state.journals.filter(journal => journal.id !== journalId);
     const entries = this.state.entries.filter(entry => entry.journal_id !== journalId);
     this.setState(
@@ -317,12 +314,12 @@ class App extends React.Component {
       currentJournal: 0,
       requested: false,}
     );
-    console.log("DELETE HANDLED")
-  };
+    // console.log("DELETE HANDLED")
+  }
 
   deleteJournal(event){
-    console.log("WORKKSS" + event.target.id)
-    console.log(typeof(event.target.id));
+    // console.log("WORKKSS" + event.target.id)
+    // console.log(typeof(event.target.id));
     var data = { 
       "journal_id": event.target.id
     };
@@ -332,12 +329,12 @@ class App extends React.Component {
     var componentThis = this;
 
     request.addEventListener("load", function() {
-        console.log("DONE");
+        // console.log("DONE");
         const responseData = JSON.parse( this.responseText );
-        console.log(this.responseText)
-        console.log( responseData );
+        // console.log(this.responseText)
+        // console.log( responseData );
         componentThis.handleDelete( responseData );
-        console.log("Journal Deleted")
+        // console.log("Journal Deleted")
     });
         
     request.open("DELETE", '/journals/delete');
@@ -351,19 +348,19 @@ class App extends React.Component {
     var data = { 
       "journal_id": event.target.id
     };
-    console.log("DELETEING ALL ENTRIES IN JOURNAL " + event.target.id)
+    // console.log("DELETEING ALL ENTRIES IN JOURNAL " + event.target.id)
     var request = new XMLHttpRequest();
 
-    var componentThis = this;
+    // var componentThis = this;
 
-    request.addEventListener("load", function() {
-        console.log("DONE");
-        const responseData = JSON.parse( this.responseText );
-        console.log(this.responseText)
-        console.log( responseData );
+    // request.addEventListener("load", function() {
+        // console.log("DONE");
+        // const responseData = JSON.parse( this.responseText );
+        // console.log(this.responseText)
+        // console.log( responseData );
         // componentThis.handleDelete( responseData.id );
-        console.log("JOURNAL ENTRIES DELETETETETD");
-    });
+        // console.log("JOURNAL ENTRIES DELETETETETD");
+    // });
         
     request.open("DELETE", '/journalentries/delete');
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -382,22 +379,20 @@ class App extends React.Component {
       requested: false
       }
     );
-    console.log("entering edit mode!")
-  };
+    // console.log("entering edit mode!")
+  }
 
   handleEdit(editedJournal) {
-    console.log("HANDLING EDIT");
-    console.log( editedJournal );
+    // console.log("HANDLING EDIT");
+    // console.log( editedJournal );
     const index = this.state.journals.findIndex(journal => journal.id === editedJournal[0].id),
     journals = [...this.state.journals];
     journals[index] = editedJournal[0];
     this.setState({journals, requested: false, inEditMode: false});
-
-    
   }
 
   submitEdit() {
-    console.log("EDITTT", this.state);
+    // console.log("EDITTT", this.state);
 
     var data = { 
         "journal_name": this.state.journalName,
@@ -412,12 +407,12 @@ class App extends React.Component {
     var componentThis = this;
 
     request.addEventListener("load", function() {
-        console.log("DONE");
+        // console.log("DONE");
         const responseData = JSON.parse( this.responseText );
-        console.log(this.responseText)
-        console.log( responseData );
+        // console.log(this.responseText)
+        // console.log( responseData );
         componentThis.handleEdit( responseData );
-        console.log("WOW DONE WITYH EDITTINGGN THING");
+        // console.log("WOW DONE WITYH EDITTINGGN THING");
     });
         
     request.open("PUT", '/journals/edit');
@@ -430,8 +425,8 @@ class App extends React.Component {
   
 
   handleAdd(journal) {
-    console.log("HANDLING ADDDD");
-    console.log( journal );
+    // console.log("HANDLING ADDDD");
+    // console.log( journal );
     this.setState(
         {journals:[journal,...this.state.journals], 
         currentJournal: journal.id,
@@ -441,7 +436,7 @@ class App extends React.Component {
 
 
   submitAdd(){
-    console.log("WIOW SUBMIT", this.state);
+    // console.log("WIOW SUBMIT", this.state);
 
     var data = { 
         "journal_name": this.state.journalName,
@@ -455,13 +450,13 @@ class App extends React.Component {
     var componentThis = this;
 
     request.addEventListener("load", function(event) {
-        console.log("DONE");
+        // console.log("DONE");
         const responseData = JSON.parse( this.responseText );
-        console.log(this.responseText)
-        console.log( responseData );
+        // console.log(this.responseText)
+        // console.log( responseData );
         componentThis.handleAdd( responseData );
         event.preventDefault()
-        console.log("New journal created!!!");
+        // console.log("New journal created!!!");
     });
         
     request.open("POST", '/journals/new');
@@ -487,7 +482,7 @@ class App extends React.Component {
           <div className={styles.mySidebar + " col-3 mt-0 p-0"}>
             
             <div className={styles.sideBarHeader + " text-center"}>
-              <h3><i class="fas fa-globe-americas"></i> TRAVELIARY</h3>
+              <h3><i className="fas fa-globe-americas"></i> TRAVELIARY</h3>
             </div>
             
             
@@ -496,7 +491,6 @@ class App extends React.Component {
               error={this.state.error}
               isLoaded={this.state.isLoaded}
               requested={this.state.requested}
-              activateAddMode={this.activateAddMode}
               inAddMode={this.state.inAddMode}
               inEditMode={this.state.inEditMode}
               journals={this.state.journals}

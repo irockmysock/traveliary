@@ -5,7 +5,6 @@ import 'moment-timezone';
 import PropTypes from 'prop-types';
 
 import styles from './style.scss';
-import main_styles from '../../style.scss';
 
 class Entry extends React.Component {
 //   addToCart(event){
@@ -22,7 +21,7 @@ class Entry extends React.Component {
                         {result.entry_date}
                     </Moment>
                     <h3>{result.title}</h3>
-                    <p className={styles.entryLocationText + " m-0"}><i class="fas fa-map-marker-alt"></i> {result.entry_location}</p>
+                    <p className={styles.entryLocationText + " m-0"}><i className="fas fa-map-marker-alt"></i> {result.entry_location}</p>
                     
                 </div> 
                 <p className={styles.entryContentText}>{result.entry_content}</p>
@@ -33,9 +32,7 @@ class Entry extends React.Component {
 
         return (
             <div className={styles.mainContentContainer + " row overflow-auto"}> 
-              {/* <div className={styles.allEntriesContainer}> */}
-                {listResults}   
-              {/* </div> */}
+                {listResults}        
             </div>
           
         );
@@ -50,7 +47,7 @@ class Entry extends React.Component {
                         {result.entry_date}
                     </Moment>
                     <h3>{result.title}</h3>
-                    <p className={styles.entryLocationText + " m-0"}><i class="fas fa-map-marker-alt"></i> {result.entry_location}</p>
+                    <p className={styles.entryLocationText + " m-0"}><i className="fas fa-map-marker-alt"></i> {result.entry_location}</p>
                     
                 </div> 
                 <p className={styles.entryContentText}>{result.entry_content}</p>
@@ -61,9 +58,9 @@ class Entry extends React.Component {
 
         return (
             <div className={styles.mainContentContainer + " row overflow-auto"}> 
-              {/* <div className={styles.allEntriesContainer}> */}
+              
                 {listResults}   
-              {/* </div> */}
+              
             </div>
 
           
@@ -78,7 +75,7 @@ class Entry extends React.Component {
                         {result.entry_date}
                     </Moment>
                     <h3>{result.title}</h3>
-                    <p className={styles.entryLocationText + " m-0"}><i class="fas fa-map-marker-alt"></i> {result.entry_location}</p>
+                    <p className={styles.entryLocationText + " m-0"}><i className="fas fa-map-marker-alt"></i> {result.entry_location}</p>
                     
                 </div> 
                 <p className={styles.entryContentText}>{result.entry_content}</p>
@@ -89,9 +86,9 @@ class Entry extends React.Component {
 
         return (
             <div className={styles.mainContentContainer + " row overflow-auto"}> 
-              {/* <div className={styles.allEntriesContainer}> */}
+              
                 {listResults}   
-              {/* </div> */}
+              
             </div>
           
         );
@@ -100,8 +97,10 @@ class Entry extends React.Component {
   }
 }
 
-// Entry.propTypes = {
-//   message: PropTypes.string.isRequired,
-// };
+Entry.propTypes = {
+  tripEntries: PropTypes.array,
+  dayEntries: PropTypes.array,
+  entries: PropTypes.array,
+};
 
 export default Entry;
